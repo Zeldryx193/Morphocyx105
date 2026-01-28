@@ -12,96 +12,15 @@ const publicaciones = [
         fecha: "28 Enero 2026, 15:30",
         texto: `¡Hola a todos! 👋
 
-Estoy emocionado de compartir con ustedes mi nuevo proyecto en el que he estado trabajando durante las últimas semanas.
-
-Es un juego de plataformas con mecánicas únicas que espero que disfruten. ¡Pronto más detalles!`,
+Prueba de como funciona estas cosas xdddd
+la verdad
         imagenes: [
-            "https://via.placeholder.com/800x500/ffd166/1a2142?text=Captura+del+Juego"
+            "https://i.imgur.com/z4vfFKw.jpeg"
         ],
-        tags: ["juegos", "desarrollo", "proyecto"],
+        tags: ["Prueba", "DesarrollandomierdASS.com", "FelacionAnal"],
         likes: 42,
         comentarios: 8
     },
-    {
-        id: 2,
-        autor: "Tu Nombre",
-        avatar: "🚀",
-        fecha: "26 Enero 2026, 10:15",
-        texto: `Reflexión del día: La mejor forma de aprender programación es construyendo proyectos reales.
-
-No te quedes solo en tutoriales, ¡crea algo tuyo! 💪`,
-        imagenes: null, // Sin imágenes
-        tags: ["programación", "aprendizaje"],
-        likes: 67,
-        comentarios: 12
-    },
-    {
-        id: 3,
-        autor: "Tu Nombre",
-        avatar: "🚀",
-        fecha: "24 Enero 2026, 18:45",
-        texto: `Algunos screenshots de mi progreso esta semana 📸
-
-¿Qué les parece el nuevo diseño de UI?`,
-        imagenes: [
-            "https://via.placeholder.com/600x400/ff6b35/ffffff?text=Screenshot+1",
-            "https://via.placeholder.com/600x400/ffd166/1a2142?text=Screenshot+2",
-            "https://via.placeholder.com/600x400/06ffa5/1a2142?text=Screenshot+3"
-        ],
-        tags: ["desarrollo", "UI/UX"],
-        likes: 89,
-        comentarios: 15
-    },
-    {
-        id: 4,
-        autor: "Tu Nombre",
-        avatar: "🚀",
-        fecha: "22 Enero 2026, 12:00",
-        texto: `Mi setup actualizado para 2026 🖥️⌨️
-
-Después de muchos ajustes, finalmente tengo un espacio de trabajo con el que estoy 100% feliz.`,
-        imagenes: [
-            "https://via.placeholder.com/800x600/667eea/ffffff?text=Mi+Setup+de+Trabajo"
-        ],
-        tags: ["setup", "productividad"],
-        likes: 124,
-        comentarios: 23
-    },
-    {
-        id: 5,
-        autor: "Tu Nombre",
-        avatar: "🚀",
-        fecha: "20 Enero 2026, 09:30",
-        texto: `Tip rápido: Si estás empezando con desarrollo web, estos son los recursos que más me ayudaron:
-
-• MDN Web Docs
-• FreeCodeCamp
-• JavaScript.info
-• CSS-Tricks
-
-¿Cuáles son tus favoritos? 🤔`,
-        imagenes: null,
-        tags: ["recursos", "webdev"],
-        likes: 156,
-        comentarios: 34
-    },
-    {
-        id: 6,
-        autor: "Tu Nombre",
-        avatar: "🚀",
-        fecha: "18 Enero 2026, 16:20",
-        texto: `¡Nuevo post en el blog! 📝
-
-Escribí sobre mi experiencia aprendiendo diseño de juegos y los errores más comunes que cometí al principio.
-
-Link en mi perfil ⬆️`,
-        imagenes: [
-            "https://via.placeholder.com/800x450/764ba2/ffffff?text=Blog+Post+Cover"
-        ],
-        tags: ["blog", "gamedev"],
-        likes: 93,
-        comentarios: 19
-    }
 ];
 
 // ============================================
