@@ -174,4 +174,9 @@ function renderJuegos() {
 
     listaJuegos.appendChild(card);
   });
+  function eliminarJuego(id) {
+  if (!confirm('¿Eliminar este juego?')) return;
+  juegos = juegos.filter(j => j.id !== id);
+  guardarJuegos();
+  renderJuegos();
 }
