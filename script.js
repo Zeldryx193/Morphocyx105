@@ -1,175 +1,367 @@
-/* =====================================
-   PROTECCIÓN: evitar doble carga
-===================================== */
-if (window.__SCRIPT_CARGADO__) {
-  console.warn("script.js ya cargado, evitando duplicado");
-} else {
-  window.__SCRIPT_CARGADO__ = true;
+// ============================================
+// CONFIGURACIÓN DE DATOS
+// ============================================
 
-  document.addEventListener("DOMContentLoaded", () => {
-
-    /* ========= ELEMENTOS ========= */
-    const tabHome = document.getElementById("tabHome");
-    const tabGames = document.getElementById("tabGames");
-    const vistaHome = document.getElementById("vistaHome");
-    const vistaGames = document.getElementById("vistaGames");
-
-    const themeToggle = document.getElementById("themeToggle");
-    const btnDev = document.getElementById("btnDev");
-
-    const editor = document.getElementById("editor");
-    const editorJuegos = document.getElementById("editorJuegos");
-
-    const titulo = document.getElementById("titulo");
-    const descripcion = document.getElementById("descripcion");
-
-    const publicacionesDiv = document.getElementById("publicaciones");
-    const listaJuegosDiv = document.getElementById("listaJuegos");
-
-    /* ========= SEGURIDAD ========= */
-    if (!btnDev || !editor || !editorJuegos) {
-      console.error("Panel admin: elementos no encontrados");
-      return;
+// Aquí puedes agregar tus proyectos
+const proyectos = [
+    {
+        id: 1,
+        titulo: "Juego de Plataformas",
+        descripcion: "Un emocionante juego de plataformas con mecánicas únicas y gráficos pixel art",
+        categoria: "juegos",
+        emoji: "🎮",
+        link: "#"
+    },
+    {
+        id: 2,
+        titulo: "Puzzle Adventure",
+        descripcion: "Resuelve acertijos en un mundo mágico lleno de desafíos mentales",
+        categoria: "juegos",
+        emoji: "🧩",
+        link: "#"
+    },
+    {
+        id: 3,
+        titulo: "Portfolio Web",
+        descripcion: "Sitio web moderno y responsive para mostrar proyectos personales",
+        categoria: "web",
+        emoji: "🌐",
+        link: "#"
+    },
+    {
+        id: 4,
+        titulo: "App de Tareas",
+        descripcion: "Aplicación minimalista para gestionar tus tareas diarias",
+        categoria: "web",
+        emoji: "✅",
+        link: "#"
+    },
+    {
+        id: 5,
+        titulo: "Generador de Arte",
+        descripcion: "Herramienta experimental para crear arte generativo",
+        categoria: "otros",
+        emoji: "🎨",
+        link: "#"
+    },
+    {
+        id: 6,
+        titulo: "Bot de Discord",
+        descripcion: "Bot personalizado con múltiples funcionalidades para servidores",
+        categoria: "otros",
+        emoji: "🤖",
+        link: "#"
     }
+];
 
-    /* =====================================
-       TEMA LIGHT / DARK
-    ===================================== */
-    themeToggle.addEventListener("click", () => {
-      document.body.classList.toggle("light");
-      themeToggle.textContent =
-        document.body.classList.contains("light") ? "☀️" : "🌙";
-      localStorage.setItem("tema", document.body.className);
+// Aquí puedes agregar tus notas/posts de blog
+const notasBlog = [
+    {
+        id: 1,
+        titulo: "Cómo empecé en el desarrollo de juegos",
+        extracto: "Mi viaje desde los primeros pasos hasta crear mi primer juego completo. Lecciones aprendidas y errores cometidos.",
+        fecha: "28 Enero 2026",
+        link: "#"
+    },
+    {
+        id: 2,
+        titulo: "5 consejos para aprender programación",
+        extracto: "Tips prácticos que me hubiera gustado conocer cuando empecé a programar. Desde la mentalidad hasta las herramientas.",
+        fecha: "20 Enero 2026",
+        link: "#"
+    },
+    {
+        id: 3,
+        titulo: "Mis herramientas favoritas de desarrollo",
+        extracto: "Una lista de las aplicaciones, frameworks y recursos que uso diariamente en mis proyectos.",
+        fecha: "15 Enero 2026",
+        link: "#"
+    },
+    {
+        id: 4,
+        titulo: "El arte del pixel art",
+        extracto: "Explorando las técnicas y la filosofía detrás del pixel art en los videojuegos modernos.",
+        fecha: "10 Enero 2026",
+        link: "#"
+    },
+    {
+        id: 5,
+        titulo: "Optimización web: lo básico",
+        extracto: "Cómo hacer que tu sitio web cargue más rápido y ofrezca mejor experiencia al usuario.",
+        fecha: "5 Enero 2026",
+        link: "#"
+    },
+    {
+        id: 6,
+        titulo: "Mi setup de trabajo 2026",
+        extracto: "Todo sobre mi espacio de trabajo, hardware, software y configuración para máxima productividad.",
+        fecha: "1 Enero 2026",
+        link: "#"
+    }
+];
+
+// ============================================
+// FUNCIONES PRINCIPALES
+// ============================================
+
+// Inicializar la página
+document.addEventListener('DOMContentLoaded', function() {
+    cargarProyectos('todos');
+    cargarNotasBlog();
+    configurarScrollSuave();
+    aplicarAnimacionesEntrada();
+});
+
+// Cargar proyectos en el grid
+function cargarProyectos(filtro = 'todos') {
+    const grid = document.getElementById('projectsGrid');
+    grid.innerHTML = '';
+    
+    const proyectosFiltrados = filtro === 'todos' 
+        ? proyectos 
+        : proyectos.filter(p => p.categoria === filtro);
+    
+    proyectosFiltrados.forEach((proyecto, index) => {
+        const card = crearTarjetaProyecto(proyecto, index);
+        grid.appendChild(card);
     });
-
-    if (localStorage.getItem("tema")) {
-      document.body.className = localStorage.getItem("tema");
-    }
-
-    /* =====================================
-       PESTAÑAS
-    ===================================== */
-    tabHome.addEventListener("click", () => cambiarVista("home"));
-    tabGames.addEventListener("click", () => cambiarVista("games"));
-
-    function cambiarVista(vista) {
-      vistaHome.style.display = "none";
-      vistaGames.style.display = "none";
-
-      const target = vista === "home" ? vistaHome : vistaGames;
-      target.style.display = "block";
-      target.style.animation = "none";
-      target.offsetHeight;
-      target.style.animation = "fadeUp 0.6s ease";
-    }
-
-    /* =====================================
-       PANEL ADMIN
-    ===================================== */
-    btnDev.addEventListener("click", () => {
-      editor.classList.toggle("activo");
-      editorJuegos.classList.toggle("activo");
-    });
-
-    /* =====================================
-       TEXTOS PRINCIPALES
-    ===================================== */
-    function cargarTextos() {
-      titulo.textContent =
-        localStorage.getItem("titulo") || "Mi Página Personal";
-      descripcion.textContent =
-        localStorage.getItem("descripcion") || "";
-    }
-
-    window.guardarContenido = function () {
-      localStorage.setItem("titulo", inputTitulo.value);
-      localStorage.setItem("descripcion", inputDescripcion.value);
-      cargarTextos();
-    };
-
-    /* =====================================
-       PUBLICACIONES (HOME)
-    ===================================== */
-    function renderPublicaciones() {
-      publicacionesDiv.innerHTML = "";
-      const posts = JSON.parse(localStorage.getItem("posts") || "[]");
-
-      posts.forEach((p, i) => {
-        const s = document.createElement("section");
-        s.style.animation = "fadeUp 0.5s ease";
-
-        s.innerHTML = `
-          <p>${p.texto}</p>
-          ${p.img ? `<img src="${p.img}" style="max-width:100%;border-radius:8px">` : ""}
-          <br><br>
-          <button onclick="eliminarPublicacion(${i})">Eliminar</button>
-        `;
-        publicacionesDiv.appendChild(s);
-      });
-    }
-
-    window.agregarPublicacion = function () {
-      const texto = inputPostTexto.value;
-      const img = inputPostImagen.value;
-
-      const posts = JSON.parse(localStorage.getItem("posts") || "[]");
-      posts.push({ texto, img });
-      localStorage.setItem("posts", JSON.stringify(posts));
-      renderPublicaciones();
-    };
-
-    window.eliminarPublicacion = function (i) {
-      const posts = JSON.parse(localStorage.getItem("posts"));
-      posts.splice(i, 1);
-      localStorage.setItem("posts", JSON.stringify(posts));
-      renderPublicaciones();
-    };
-
-    /* =====================================
-       JUEGOS
-    ===================================== */
-    function renderJuegos() {
-      listaJuegosDiv.innerHTML = "";
-      const juegos = JSON.parse(localStorage.getItem("juegos") || "[]");
-
-      juegos.forEach((j, i) => {
-        const s = document.createElement("section");
-        s.style.animation = "fadeUp 0.5s ease";
-
-        s.innerHTML = `
-          <h3>${j.titulo}</h3>
-          <p>${j.desc}</p>
-          ${j.img ? `<img src="${j.img}" style="max-width:100%;border-radius:8px">` : ""}
-          <br><br>
-          <button onclick="eliminarJuego(${i})">Eliminar</button>
-        `;
-        listaJuegosDiv.appendChild(s);
-      });
-    }
-
-    window.agregarJuego = function () {
-      const titulo = inputJuegoTitulo.value;
-      const desc = inputJuegoDesc.value;
-      const img = inputJuegoImg.value;
-
-      const juegos = JSON.parse(localStorage.getItem("juegos") || "[]");
-      juegos.push({ titulo, desc, img });
-      localStorage.setItem("juegos", JSON.stringify(juegos));
-      renderJuegos();
-    };
-
-    window.eliminarJuego = function (i) {
-      const juegos = JSON.parse(localStorage.getItem("juegos"));
-      juegos.splice(i, 1);
-      localStorage.setItem("juegos", JSON.stringify(juegos));
-      renderJuegos();
-    };
-
-    /* =====================================
-       CARGA INICIAL
-    ===================================== */
-    cargarTextos();
-    renderPublicaciones();
-    renderJuegos();
-  });
 }
+
+// Crear tarjeta de proyecto
+function crearTarjetaProyecto(proyecto, index) {
+    const card = document.createElement('div');
+    card.className = 'project-card fade-in';
+    card.style.animationDelay = `${index * 0.1}s`;
+    
+    card.innerHTML = `
+        <div class="project-image">
+            <span>${proyecto.emoji}</span>
+        </div>
+        <div class="project-content">
+            <span class="project-tag">${capitalizarPrimeraLetra(proyecto.categoria)}</span>
+            <h3 class="project-title">${proyecto.titulo}</h3>
+            <p class="project-description">${proyecto.descripcion}</p>
+        </div>
+    `;
+    
+    card.onclick = () => window.location.href = proyecto.link;
+    
+    return card;
+}
+
+// Cargar notas del blog
+function cargarNotasBlog() {
+    const grid = document.getElementById('blogGrid');
+    grid.innerHTML = '';
+    
+    notasBlog.forEach((nota, index) => {
+        const card = crearTarjetaBlog(nota, index);
+        grid.appendChild(card);
+    });
+}
+
+// Crear tarjeta de blog
+function crearTarjetaBlog(nota, index) {
+    const card = document.createElement('div');
+    card.className = 'blog-card fade-in';
+    card.style.animationDelay = `${index * 0.1}s`;
+    
+    card.innerHTML = `
+        <div class="blog-date">
+            <span>${nota.fecha}</span>
+        </div>
+        <div class="blog-content">
+            <h3 class="blog-title">${nota.titulo}</h3>
+            <p class="blog-excerpt">${nota.extracto}</p>
+        </div>
+    `;
+    
+    card.onclick = () => window.location.href = nota.link;
+    
+    return card;
+}
+
+// ============================================
+// FILTROS DE PROYECTOS
+// ============================================
+
+function filterProjects(categoria) {
+    // Actualizar botones activos
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Cargar proyectos filtrados
+    cargarProyectos(categoria);
+}
+
+// ============================================
+// TEMA CLARO/OSCURO
+// ============================================
+
+function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? '' : 'light';
+    
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    // Actualizar texto del botón
+    const btn = document.querySelector('.theme-toggle');
+    btn.textContent = newTheme === 'light' ? '🌙 Modo' : '☀️ Modo';
+}
+
+// Cargar tema guardado
+window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const btn = document.querySelector('.theme-toggle');
+        btn.textContent = savedTheme === 'light' ? '🌙 Modo' : '☀️ Modo';
+    }
+});
+
+// ============================================
+// MENÚ MÓVIL
+// ============================================
+
+function toggleMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.toggle('active');
+}
+
+// Cerrar menú al hacer clic en un enlace
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('active');
+    });
+});
+
+// ============================================
+// SCROLL SUAVE
+// ============================================
+
+function configurarScrollSuave() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const offsetTop = target.offsetTop - 80; // 80px para el header fijo
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// ============================================
+// ANIMACIONES DE ENTRADA
+// ============================================
+
+function aplicarAnimacionesEntrada() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+    
+    // Observar secciones
+    document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+    });
+}
+
+// ============================================
+// HEADER AL HACER SCROLL
+// ============================================
+
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > lastScroll && currentScroll > 100) {
+        header.style.transform = 'translateY(-100%)';
+    } else {
+        header.style.transform = 'translateY(0)';
+    }
+    
+    lastScroll = currentScroll;
+});
+
+// ============================================
+// UTILIDADES
+// ============================================
+
+function capitalizarPrimeraLetra(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// ============================================
+// FUNCIONES PARA AGREGAR CONTENIDO DINÁMICAMENTE
+// ============================================
+
+// Función para agregar un nuevo proyecto
+function agregarProyecto(titulo, descripcion, categoria, emoji, link) {
+    const nuevoProyecto = {
+        id: proyectos.length + 1,
+        titulo,
+        descripcion,
+        categoria,
+        emoji,
+        link
+    };
+    
+    proyectos.push(nuevoProyecto);
+    cargarProyectos('todos');
+    
+    console.log('Proyecto agregado:', nuevoProyecto);
+}
+
+// Función para agregar una nueva nota de blog
+function agregarNotaBlog(titulo, extracto, fecha, link) {
+    const nuevaNota = {
+        id: notasBlog.length + 1,
+        titulo,
+        extracto,
+        fecha,
+        link
+    };
+    
+    notasBlog.unshift(nuevaNota); // Agregar al inicio
+    cargarNotasBlog();
+    
+    console.log('Nota agregada:', nuevaNota);
+}
+
+// ============================================
+// CONSOLE LOG DE BIENVENIDA
+// ============================================
+
+console.log(`
+╔═══════════════════════════════════════╗
+║   🚀 Portafolio Personal Cargado     ║
+║                                       ║
+║   Proyectos: ${proyectos.length}                        ║
+║   Notas: ${notasBlog.length}                            ║
+║                                       ║
+║   Hecho con ❤️ y JavaScript          ║
+╚═══════════════════════════════════════╝
+`);
+
+// ============================================
+// EXPORTAR FUNCIONES (opcional)
+// ============================================
+
+// Si quieres usar estas funciones desde la consola del navegador
+window.agregarProyecto = agregarProyecto;
+window.agregarNotaBlog = agregarNotaBlog;
