@@ -1,22 +1,15 @@
-/* ===== script.js v=3 ===== */
+/* ===== script.js v5 ===== */
 
-/* CONFIG */
 const CODIGO_DEV = "1234";
-
-/* ESTADO */
 let adminActivo = false;
 let posts = [];
 let juegos = [];
 
-/* INIT */
 document.addEventListener('DOMContentLoaded', () => {
-  // botones navegación
-  document.getElementById('tabHome')?.addEventListener('click', () => cambiarVista('home'));
-  document.getElementById('tabGames')?.addEventListener('click', () => cambiarVista('games'));
-
-  // botones globales
-  document.getElementById('btnDev')?.addEventListener('click', activarEditor);
-  document.getElementById('themeToggle')?.addEventListener('click', toggleTema);
+  tabHome.onclick = () => cambiarVista('home');
+  tabGames.onclick = () => cambiarVista('games');
+  btnDev.onclick = activarAdmin;
+  themeToggle.onclick = toggleTema;
 
   cargarContenido();
   cargarPublicaciones();
@@ -25,28 +18,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* VISTAS */
-function cambiarVista(vista) {
-  document.getElementById('vistaHome').style.display = vista === 'home' ? 'block' : 'none';
-  document.getElementById('vistaGames').style.display = vista === 'games' ? 'block' : 'none';
+function cambiarVista(v) {
+  vistaHome.style.display = v === 'home' ? 'block' : 'none';
+  vistaGames.style.display = v === 'games' ? 'block' : 'none';
 }
 
 /* ADMIN */
-function activarEditor() {
-  const codigo = prompt('Código desarrollador');
-  if (codigo !== CODIGO_DEV) return alert('Código incorrecto');
+function activarAdmin() {
+  const code = prompt("Código admin");
+  if (code !== CODIGO_DEV) return alert("Incorrecto");
 
   adminActivo = true;
-  document.getElementById('editor').style.display = 'block';
-  document.getElementById('editorJuegos').style.display = 'block';
+  editor.style.display = 'block';
+  editorJuegos.style.display = 'block';
   renderPublicaciones();
   renderJuegos();
 }
 
 /* TEMA */
 function aplicarTema() {
-  const tema = localStorage.getItem('tema') || 'dark';
-  document.body.classList.toggle('light', tema === 'light');
-  document.getElementById('themeToggle').textContent = tema === 'light' ? '🌞' : '🌙';
+  const t = localStorage.getItem('tema') || 'dark';
+  document.body.classList.toggle('light', t === 'light');
+  themeToggle.textContent = t === 'light' ? '🌞' : '🌙';
 }
 
 function toggleTema() {
@@ -55,39 +48,28 @@ function toggleTema() {
   aplicarTema();
 }
 
-/* CONTENIDO PRINCIPAL */
+/* CONTENIDO */
 function guardarContenido() {
   localStorage.setItem('titulo', inputTitulo.value);
   localStorage.setItem('descripcion', inputDescripcion.value);
-  titulo.textContent = inputTitulo.value;
-  descripcion.textContent = inputDescripcion.value;
+  cargarContenido();
 }
 
 function cargarContenido() {
   titulo.textContent = localStorage.getItem('titulo') || 'Mi Página Personal';
-  descripcion.textContent = localStorage.getItem('descripcion') || 'Contenido privado';
+  descripcion.textContent = localStorage.getItem('descripcion') || '';
 }
 
-/* PUBLICACIONES GENERALES */
+/* PUBLICACIONES */
 function cargarPublicaciones() {
   posts = JSON.parse(localStorage.getItem('posts')) || [];
   renderPublicaciones();
 }
 
-function guardarPublicaciones() {
-  localStorage.setItem('posts', JSON.stringify(posts));
-}
-
 function agregarPublicacion() {
-  if (!inputPostTexto.value && !inputPostImagen.value) return;
-
-  posts.push({
-    id: Date.now(),
-    texto: inputPostTexto.value,
-    imagen: inputPostImagen.value
-  });
-
-  guardarPublicaciones();
+  if (!inputPostTexto.value) return;
+  posts.push({ id: Date.now(), texto: inputPostTexto.value, img: inputPostImagen.value });
+  localStorage.setItem('posts', JSON.stringify(posts));
   renderPublicaciones();
   inputPostTexto.value = '';
   inputPostImagen.value = '';
@@ -96,27 +78,10 @@ function agregarPublicacion() {
 function renderPublicaciones() {
   publicaciones.innerHTML = '';
   posts.forEach(p => {
-    const div = document.createElement('div');
-    div.style.marginBottom = '20px';
-    div.style.background = 'var(--bg-card)';
-    div.style.padding = '15px';
-    div.style.borderRadius = '10px';
-
-    if (p.texto) {
-      const t = document.createElement('p');
-      t.textContent = p.texto;
-      div.appendChild(t);
-    }
-
-    if (p.imagen) {
-      const img = document.createElement('img');
-      img.src = p.imagen;
-      img.style.width = '100%';
-      img.style.borderRadius = '8px';
-      div.appendChild(img);
-    }
-
-    publicaciones.appendChild(div);
+    const d = document.createElement('div');
+    d.innerHTML = `<p>${p.texto}</p>`;
+    if (p.img) d.innerHTML += `<img src="${p.img}" style="width:100%">`;
+    publicaciones.appendChild(d);
   });
 }
 
@@ -126,68 +91,34 @@ function cargarJuegos() {
   renderJuegos();
 }
 
-function guardarJuegos() {
-  localStorage.setItem('juegos', JSON.stringify(juegos));
-}
-
 function agregarJuego() {
-  if (!inputJuegoTitulo.value) return;
-
   juegos.push({
     id: Date.now(),
     titulo: inputJuegoTitulo.value,
-    descripcion: inputJuegoDesc.value,
-    imagen: inputJuegoImg.value
+    desc: inputJuegoDesc.value,
+    img: inputJuegoImg.value
   });
-
-  guardarJuegos();
+  localStorage.setItem('juegos', JSON.stringify(juegos));
   renderJuegos();
-
-  inputJuegoTitulo.value = '';
-  inputJuegoDesc.value = '';
-  inputJuegoImg.value = '';
 }
 
 function renderJuegos() {
   listaJuegos.innerHTML = '';
-
   juegos.forEach(j => {
-    const card = document.createElement('section');
-    card.style.marginBottom = '20px';
+    const s = document.createElement('section');
+    s.innerHTML = `<h3>${j.titulo}</h3><p>${j.desc}</p>`;
+    if (j.img) s.innerHTML += `<img src="${j.img}" style="width:100%">`;
 
-    const h = document.createElement('h3');
-    h.textContent = j.titulo;
-    card.appendChild(h);
-
-    if (j.descripcion) {
-      const p = document.createElement('p');
-      p.textContent = j.descripcion;
-      card.appendChild(p);
-    }
-
-    if (j.imagen) {
-      const img = document.createElement('img');
-      img.src = j.imagen;
-      img.style.width = '100%';
-      img.style.borderRadius = '8px';
-      card.appendChild(img);
-    }
-
-    // 🔥 BOTÓN ELIMINAR SOLO EN MODO ADMIN
     if (adminActivo) {
-      const btnEliminar = document.createElement('button');
-      btnEliminar.textContent = 'Eliminar';
-      btnEliminar.style.marginTop = '10px';
-      btnEliminar.onclick = () => eliminarJuego(j.id);
-      card.appendChild(btnEliminar);
+      const b = document.createElement('button');
+      b.textContent = 'Eliminar';
+      b.onclick = () => {
+        juegos = juegos.filter(x => x.id !== j.id);
+        localStorage.setItem('juegos', JSON.stringify(juegos));
+        renderJuegos();
+      };
+      s.appendChild(b);
     }
-
-    listaJuegos.appendChild(card);
+    listaJuegos.appendChild(s);
   });
-}
-  function eliminarJuego(id) {
-  if (!confirm('¿Eliminar este juego?')) return;
-  juegos = juegos.filter(j => j.id !== id);
-  guardarJuegos();
-  renderJuegos();
 }
