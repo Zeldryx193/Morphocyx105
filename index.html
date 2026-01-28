@@ -1,177 +1,139 @@
-/* ===== script.js v=3 ===== */
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Página Personal</title>
 
-/* CONFIG */
-const CODIGO_DEV = "1234";
-
-/* ESTADO */
-let adminActivo = false;
-let posts = [];
-let juegos = [];
-
-/* INIT */
-document.addEventListener('DOMContentLoaded', () => {
-  // botones navegación
-  document.getElementById('tabHome')?.addEventListener('click', () => cambiarVista('home'));
-  document.getElementById('tabGames')?.addEventListener('click', () => cambiarVista('games'));
-
-  // botones globales
-  document.getElementById('btnDev')?.addEventListener('click', activarEditor);
-  document.getElementById('themeToggle')?.addEventListener('click', toggleTema);
-
-  cargarContenido();
-  cargarPublicaciones();
-  cargarJuegos();
-  aplicarTema();
-});
-
-/* VISTAS */
-function cambiarVista(vista) {
-  document.getElementById('vistaHome').style.display = vista === 'home' ? 'block' : 'none';
-  document.getElementById('vistaGames').style.display = vista === 'games' ? 'block' : 'none';
-}
-
-/* ADMIN */
-function activarEditor() {
-  const codigo = prompt('Código desarrollador');
-  if (codigo !== CODIGO_DEV) return alert('Código incorrecto');
-
-  adminActivo = true;
-  document.getElementById('editor').style.display = 'block';
-  document.getElementById('editorJuegos').style.display = 'block';
-  renderPublicaciones();
-  renderJuegos();
-}
-
-/* TEMA */
-function aplicarTema() {
-  const tema = localStorage.getItem('tema') || 'dark';
-  document.body.classList.toggle('light', tema === 'light');
-  document.getElementById('themeToggle').textContent = tema === 'light' ? '🌞' : '🌙';
-}
-
-function toggleTema() {
-  const esLight = document.body.classList.toggle('light');
-  localStorage.setItem('tema', esLight ? 'light' : 'dark');
-  aplicarTema();
-}
-
-/* CONTENIDO PRINCIPAL */
-function guardarContenido() {
-  localStorage.setItem('titulo', inputTitulo.value);
-  localStorage.setItem('descripcion', inputDescripcion.value);
-  titulo.textContent = inputTitulo.value;
-  descripcion.textContent = inputDescripcion.value;
-}
-
-function cargarContenido() {
-  titulo.textContent = localStorage.getItem('titulo') || 'Mi Página Personal';
-  descripcion.textContent = localStorage.getItem('descripcion') || 'Contenido privado';
-}
-
-/* PUBLICACIONES GENERALES */
-function cargarPublicaciones() {
-  posts = JSON.parse(localStorage.getItem('posts')) || [];
-  renderPublicaciones();
-}
-
-function guardarPublicaciones() {
-  localStorage.setItem('posts', JSON.stringify(posts));
-}
-
-function agregarPublicacion() {
-  if (!inputPostTexto.value && !inputPostImagen.value) return;
-
-  posts.push({
-    id: Date.now(),
-    texto: inputPostTexto.value,
-    imagen: inputPostImagen.value
-  });
-
-  guardarPublicaciones();
-  renderPublicaciones();
-  inputPostTexto.value = '';
-  inputPostImagen.value = '';
-}
-
-function renderPublicaciones() {
-  publicaciones.innerHTML = '';
-  posts.forEach(p => {
-    const div = document.createElement('div');
-    div.style.marginBottom = '20px';
-    div.style.background = 'var(--bg-card)';
-    div.style.padding = '15px';
-    div.style.borderRadius = '10px';
-
-    if (p.texto) {
-      const t = document.createElement('p');
-      t.textContent = p.texto;
-      div.appendChild(t);
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-light: #f3f4f6;
+      --bg-card: #0f172a;
+      --text-dark: #e5e7eb;
+      --text-light: #020617;
+      --primary: #2563eb;
     }
 
-    if (p.imagen) {
-      const img = document.createElement('img');
-      img.src = p.imagen;
-      img.style.width = '100%';
-      img.style.borderRadius = '8px';
-      div.appendChild(img);
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-dark);
     }
 
-    publicaciones.appendChild(div);
-  });
-}
-
-/* JUEGOS */
-function cargarJuegos() {
-  juegos = JSON.parse(localStorage.getItem('juegos')) || [];
-  renderJuegos();
-}
-
-function guardarJuegos() {
-  localStorage.setItem('juegos', JSON.stringify(juegos));
-}
-
-function agregarJuego() {
-  if (!inputJuegoTitulo.value) return;
-
-  juegos.push({
-    id: Date.now(),
-    titulo: inputJuegoTitulo.value,
-    descripcion: inputJuegoDesc.value,
-    imagen: inputJuegoImg.value
-  });
-
-  guardarJuegos();
-  renderJuegos();
-
-  inputJuegoTitulo.value = '';
-  inputJuegoDesc.value = '';
-  inputJuegoImg.value = '';
-}
-
-function renderJuegos() {
-  listaJuegos.innerHTML = '';
-
-  juegos.forEach(j => {
-    const card = document.createElement('section');
-    const h = document.createElement('h3');
-    h.textContent = j.titulo;
-
-    card.appendChild(h);
-
-    if (j.descripcion) {
-      const p = document.createElement('p');
-      p.textContent = j.descripcion;
-      card.appendChild(p);
+    body.light {
+      background: var(--bg-light);
+      color: var(--text-light);
     }
 
-    if (j.imagen) {
-      const img = document.createElement('img');
-      img.src = j.imagen;
-      img.style.width = '100%';
-      img.style.borderRadius = '8px';
-      card.appendChild(img);
+    header {
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--primary);
+      color: white;
     }
 
-    listaJuegos.appendChild(card);
-  });
-}
+    nav button {
+      margin-right: 8px;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    section {
+      background: var(--bg-card);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+    }
+
+    body.light section {
+      background: white;
+    }
+
+    .editor {
+      display: none;
+      border: 2px dashed var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <button id="tabHome">🏠 Hogar</button>
+    <button id="tabGames">🎮 Juegos</button>
+  </nav>
+
+  <div>
+    <button id="themeToggle">🌙</button>
+    <button id="btnDev">🛠️</button>
+  </div>
+</header>
+
+<main>
+  <!-- VISTA HOME -->
+  <div id="vistaHome">
+    <section>
+      <h1 id="titulo">Mi Página Personal</h1>
+      <p id="descripcion"></p>
+    </section>
+
+    <section>
+      <h2>Publicaciones</h2>
+      <div id="publicaciones"></div>
+    </section>
+  </div>
+
+  <!-- VISTA JUEGOS -->
+  <div id="vistaGames" style="display:none">
+    <section>
+      <h2>Mis Juegos</h2>
+      <div id="listaJuegos"></div>
+    </section>
+  </div>
+
+  <!-- PANEL ADMIN -->
+  <section class="editor" id="editor">
+    <h2>🛠️ Panel Admin</h2>
+
+    <h3>Textos</h3>
+    <input id="inputTitulo" placeholder="Título" />
+    <textarea id="inputDescripcion" placeholder="Descripción"></textarea>
+    <button onclick="guardarContenido()">Guardar</button>
+
+    <hr><br>
+
+    <h3>Nueva publicación (Hogar)</h3>
+    <textarea id="inputPostTexto" placeholder="Texto"></textarea>
+    <input id="inputPostImagen" placeholder="URL imagen" />
+    <button onclick="agregarPublicacion()">Publicar</button>
+  </section>
+
+  <section class="editor" id="editorJuegos">
+    <h3>Nuevo Juego</h3>
+    <input id="inputJuegoTitulo" placeholder="Título del juego" />
+    <textarea id="inputJuegoDesc" placeholder="Descripción"></textarea>
+    <input id="inputJuegoImg" placeholder="URL imagen" />
+    <button onclick="agregarJuego()">Agregar juego</button>
+  </section>
+</main>
+
+<script src="script.js?v=4"></script>
+</body>
+</html>
