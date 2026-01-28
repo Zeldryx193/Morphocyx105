@@ -1,145 +1,599 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mi Página Personal</title>
-<script src="script.js?v=6" defer></script>
-<style>
-:root {
-  --bg-dark:#020617;
-  --bg-light:#f3f4f6;
-  --card-dark:#0f172a;
-  --text-dark:#e5e7eb;
-  --text-light:#020617;
-  --primary:#2563eb;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portafolio Personal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #151b3d;
+            --bg-card: #1a2142;
+            --text-primary: #e8eaed;
+            --text-secondary: #a8b2d1;
+            --accent: #ffd166;
+            --accent-hover: #ffb732;
+            --border: rgba(255, 209, 102, 0.2);
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
 
-*{
-  box-sizing:border-box;
-  transition:background .4s,color .4s,transform .4s,box-shadow .4s;
-}
+        [data-theme="light"] {
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --accent: #ff6b35;
+            --accent-hover: #ff5722;
+            --border: rgba(255, 107, 53, 0.2);
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
 
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg-dark);
-  color:var(--text-dark);
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body.light{
-  background:var(--bg-light);
-  color:var(--text-light);
-}
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
 
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 20px;
-  background:var(--primary);
-  color:white;
-  animation:fadeUp .8s ease;
-}
+        /* Header y Navegación */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
 
-button{
-  background:var(--primary);
-  color:white;
-  border:none;
-  padding:8px 14px;
-  border-radius:8px;
-  cursor:pointer;
-}
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+        }
 
-button:hover{transform:scale(1.05)}
-button:active{transform:scale(.97)}
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
 
-main{
-  max-width:1000px;
-  margin:auto;
-  padding:20px;
-}
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
 
-section{
-  background:var(--card-dark);
-  padding:20px;
-  border-radius:12px;
-  margin-bottom:20px;
-  animation:fadeUp .6s ease forwards;
-}
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            position: relative;
+        }
 
-body.light section{background:white}
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
 
-.editor{
-  display:none;
-  border:2px dashed var(--primary);
-}
+        .nav-links a:hover {
+            color: var(--accent);
+        }
 
-/* Animación base */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(12px)}
-  to{opacity:1;transform:translateY(0)}
-}
-</style>
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            transform: scale(1.05);
+        }
+
+        /* Menú móvil */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.05;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.05; }
+            50% { transform: scale(1.2); opacity: 0.08; }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .cta-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        /* Secciones */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Filtros */
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Grid de proyectos */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow);
+            border-color: var(--accent);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--bg-secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover .project-image::after {
+            opacity: 1;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .blog-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px var(--shadow);
+        }
+
+        .blog-date {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .blog-date span {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .blog-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Contacto */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: var(--bg-secondary);
+                width: 100%;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--border);
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .projects-grid,
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+        }
+
+        /* Animaciones de entrada */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Hidden class para filtros */
+        .hidden {
+            display: none !important;
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">TuNombre</a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙 Modo</button>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        </nav>
+    </header>
 
-<header>
-  <nav>
-    <button id="tabHome">Hogar</button>
-    <button id="tabGames">Juegos</button>
-  </nav>
-  <div>
-    <button id="themeToggle">🌙</button>
-    <button id="btnAdmin">Admin</button>
-  </div>
-</header>
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>Hola, soy [Tu Nombre]</h1>
+            <p>Desarrollador, creador de juegos y escritor de pensamientos aleatorios</p>
+            <a href="#proyectos" class="cta-button">Ver mis proyectos</a>
+        </div>
+    </section>
 
-<main>
+    <!-- Proyectos/Juegos Section -->
+    <section id="proyectos">
+        <h2 class="section-title">Mis Proyectos</h2>
+        <p class="section-subtitle">Una colección de mis creaciones y experimentos</p>
+        
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterProjects('todos')">Todos</button>
+            <button class="filter-btn" onclick="filterProjects('juegos')">Juegos</button>
+            <button class="filter-btn" onclick="filterProjects('web')">Web</button>
+            <button class="filter-btn" onclick="filterProjects('otros')">Otros</button>
+        </div>
 
-<div id="vistaHome">
-  <section>
-    <h1 id="titulo">Mi Página Personal</h1>
-    <p id="descripcion"></p>
-  </section>
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Los proyectos se cargarán dinámicamente con JavaScript -->
+        </div>
+    </section>
 
-  <section>
-    <h2>Publicaciones</h2>
-    <div id="publicaciones"></div>
-  </section>
-</div>
+    <!-- Blog/Notas Section -->
+    <section id="blog">
+        <h2 class="section-title">Blog & Notas</h2>
+        <p class="section-subtitle">Pensamientos, tutoriales y actualizaciones</p>
+        
+        <div class="blog-grid" id="blogGrid">
+            <!-- Las notas se cargarán dinámicamente con JavaScript -->
+        </div>
+    </section>
 
-<div id="vistaGames" style="display:none">
-  <section>
-    <h2>Mis Juegos</h2>
-    <div id="listaJuegos"></div>
-  </section>
-</div>
+    <!-- Contacto Section -->
+    <section id="contacto">
+        <h2 class="section-title">Contáctame</h2>
+        <p class="section-subtitle">¿Tienes alguna pregunta o proyecto en mente?</p>
+        
+        <div class="contact-info">
+            <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3>Email</h3>
+                <a href="mailto:tu@email.com">tu@email.com</a>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">💼</div>
+                <h3>GitHub</h3>
+                <a href="https://github.com/tuusuario" target="_blank">@tuusuario</a>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">🐦</div>
+                <h3>Twitter</h3>
+                <a href="https://twitter.com/tuusuario" target="_blank">@tuusuario</a>
+            </div>
+        </div>
+    </section>
 
-<section class="editor" id="editor">
-  <h2>Panel Admin</h2>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 [Tu Nombre]. Hecho con ❤️ y mucho café</p>
+    </footer>
 
-  <input id="inputTitulo" placeholder="Título">
-  <textarea id="inputDescripcion" placeholder="Descripción"></textarea>
-  <button onclick="guardarContenido()">Guardar textos</button>
-
-  <hr><br>
-
-  <textarea id="inputPostTexto" placeholder="Texto publicación"></textarea>
-  <input id="inputPostImagen" placeholder="URL imagen">
-  <button onclick="agregarPublicacion()">Publicar</button>
-</section>
-
-<section class="editor" id="editorJuegos">
-  <input id="inputJuegoTitulo" placeholder="Título juego">
-  <textarea id="inputJuegoDesc" placeholder="Descripción juego"></textarea>
-  <input id="inputJuegoImg" placeholder="URL imagen">
-  <button onclick="agregarJuego()">Agregar juego</button>
-</section>
-
-</main>
-  
-<script src="script.js?v=10" defer></script>
+    <script src="script.js"></script>
 </body>
 </html>
