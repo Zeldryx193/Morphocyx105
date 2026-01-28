@@ -1,79 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mi Página Personal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Página Personal</title>
 
-  <style>
-    :root {
-      --bg-dark:#020617;
-      --bg-light:#f3f4f6;
-      --card-dark:#0f172a;
-      --card-light:#ffffff;
-      --text-dark:#e5e7eb;
-      --text-light:#020617;
-      --primary:#2563eb;
-    }
+<style>
+:root{
+  --bg-dark:#020617;
+  --bg-light:#f3f4f6;
+  --card-dark:#0f172a;
+  --card-light:#ffffff;
+  --text-dark:#e5e7eb;
+  --text-light:#020617;
+  --primary:#2563eb;
+}
 
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      background:var(--bg-dark);
-      color:var(--text-dark);
-    }
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg-dark);
+  color:var(--text-dark);
+}
 
-    body.light{
-      background:var(--bg-light);
-      color:var(--text-light);
-    }
+body.light{
+  background:var(--bg-light);
+  color:var(--text-light);
+}
 
-    header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:15px 20px;
-      background:var(--primary);
-      color:white;
-    }
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background:var(--primary);
+  color:white;
+}
 
-    nav button{margin-right:10px}
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
 
-    button{
-      background:var(--primary);
-      color:white;
-      border:none;
-      padding:8px 14px;
-      border-radius:8px;
-      cursor:pointer;
-    }
+main{
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
+}
 
-    main{
-      max-width:1000px;
-      margin:auto;
-      padding:20px;
-    }
+section{
+  background:var(--card-dark);
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+}
 
-    section{
-      background:var(--card-dark);
-      padding:20px;
-      border-radius:12px;
-      margin-bottom:20px;
-    }
+body.light section{background:var(--card-light)}
 
-    body.light section{background:var(--card-light)}
+.editor{display:none;border:2px dashed var(--primary)}
 
-    img{
-      max-width:100%;
-      border-radius:8px;
-      margin-top:10px;
-    }
-
-    .editor{
-      display:none;
-      border:2px dashed var(--primary);
-    }
-  </style>
+img{max-width:100%;border-radius:8px;margin-top:10px}
+</style>
 </head>
 
 <body>
@@ -85,58 +76,65 @@
   </nav>
   <div>
     <button id="themeToggle">🌙</button>
-    <button id="btnDev">Admin</button>
+    <button id="btnLogin">Login</button>
   </div>
 </header>
 
 <main>
 
-  <!-- HOGAR -->
-  <div id="vistaHome">
-    <section>
-      <h1 id="titulo">Mi Página Personal</h1>
-      <p id="descripcion"></p>
-    </section>
-
-    <section>
-      <h2>Publicaciones</h2>
-      <div id="publicaciones"></div>
-    </section>
-  </div>
-
-  <!-- JUEGOS -->
-  <div id="vistaGames" style="display:none">
-    <section>
-      <h2>Mis Juegos</h2>
-      <div id="listaJuegos"></div>
-    </section>
-  </div>
-
-  <!-- PANEL ADMIN -->
-  <section class="editor" id="editor">
-    <h2>Panel Admin</h2>
-
-    <input id="inputTitulo" placeholder="Título"/>
-    <textarea id="inputDescripcion" placeholder="Descripción"></textarea>
-    <button onclick="guardarContenido()">Guardar textos</button>
-
-    <hr><br>
-
-    <textarea id="inputPostTexto" placeholder="Texto publicación"></textarea>
-    <input id="inputPostImagen" placeholder="URL imagen"/>
-    <button onclick="agregarPublicacion()">Publicar</button>
+<div id="vistaHome">
+  <section>
+    <h1 id="titulo">Mi Página</h1>
+    <p id="descripcion"></p>
   </section>
 
-  <section class="editor" id="editorJuegos">
-    <h3>Nuevo Juego</h3>
-    <input id="inputJuegoTitulo" placeholder="Título"/>
-    <textarea id="inputJuegoDesc" placeholder="Descripción"></textarea>
-    <input id="inputJuegoImg" placeholder="URL imagen"/>
-    <button onclick="agregarJuego()">Agregar juego</button>
+  <section>
+    <h2>Publicaciones</h2>
+    <div id="publicaciones"></div>
   </section>
+</div>
+
+<div id="vistaGames" style="display:none">
+  <section>
+    <h2>Juegos</h2>
+    <div id="listaJuegos"></div>
+  </section>
+</div>
+
+<section class="editor" id="panelAdmin">
+  <h2>Panel Admin</h2>
+
+  <h3>🎨 Colores</h3>
+  <input type="color" id="colorPrimary">
+  <input type="color" id="colorBgDark">
+  <input type="color" id="colorBgLight">
+  <button onclick="guardarColores()">Guardar colores</button>
+
+  <hr>
+
+  <h3>✏️ Textos</h3>
+  <input id="inputTitulo" placeholder="Título">
+  <textarea id="inputDescripcion" placeholder="Descripción"></textarea>
+  <button onclick="guardarContenido()">Guardar textos</button>
+
+  <hr>
+
+  <h3>📝 Publicación</h3>
+  <textarea id="inputPostTexto"></textarea>
+  <input type="file" id="inputPostImg">
+  <button onclick="agregarPublicacion()">Publicar</button>
+
+  <hr>
+
+  <h3>🎮 Juego</h3>
+  <input id="inputJuegoTitulo">
+  <textarea id="inputJuegoDesc"></textarea>
+  <input type="file" id="inputJuegoImg">
+  <button onclick="agregarJuego()">Agregar juego</button>
+</section>
 
 </main>
 
-<script src="script.js?v=6" defer></script>
+<script src="script.js?v=7" defer></script>
 </body>
 </html>
