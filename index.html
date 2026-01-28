@@ -7,68 +7,71 @@
 
   <style>
     :root {
-      --bg-dark: #020617;
-      --bg-light: #f3f4f6;
-      --card-dark: #0f172a;
-      --text-dark: #e5e7eb;
-      --text-light: #020617;
-      --primary: #2563eb;
+      --bg-dark:#020617;
+      --bg-light:#f3f4f6;
+      --card-dark:#0f172a;
+      --card-light:#ffffff;
+      --text-dark:#e5e7eb;
+      --text-light:#020617;
+      --primary:#2563eb;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-dark);
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--bg-dark);
+      color:var(--text-dark);
     }
 
-    body.light {
-      background: var(--bg-light);
-      color: var(--text-light);
+    body.light{
+      background:var(--bg-light);
+      color:var(--text-light);
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      background: var(--primary);
-      color: white;
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 20px;
+      background:var(--primary);
+      color:white;
     }
 
-    nav button {
-      margin-right: 10px;
+    nav button{margin-right:10px}
+
+    button{
+      background:var(--primary);
+      color:white;
+      border:none;
+      padding:8px 14px;
+      border-radius:8px;
+      cursor:pointer;
     }
 
-    button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
+    main{
+      max-width:1000px;
+      margin:auto;
+      padding:20px;
     }
 
-    main {
-      max-width: 1000px;
-      margin: auto;
-      padding: 20px;
+    section{
+      background:var(--card-dark);
+      padding:20px;
+      border-radius:12px;
+      margin-bottom:20px;
     }
 
-    section {
-      background: var(--card-dark);
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
+    body.light section{background:var(--card-light)}
+
+    img{
+      max-width:100%;
+      border-radius:8px;
+      margin-top:10px;
     }
 
-    body.light section {
-      background: white;
-    }
-
-    .editor {
-      display: none;
-      border: 2px dashed var(--primary);
+    .editor{
+      display:none;
+      border:2px dashed var(--primary);
     }
   </style>
 </head>
@@ -88,7 +91,7 @@
 
 <main>
 
-  <!-- HOME -->
+  <!-- HOGAR -->
   <div id="vistaHome">
     <section>
       <h1 id="titulo">Mi Página Personal</h1>
@@ -125,14 +128,15 @@
   </section>
 
   <section class="editor" id="editorJuegos">
-    <input id="inputJuegoTitulo" placeholder="Título juego"/>
-    <textarea id="inputJuegoDesc" placeholder="Descripción juego"></textarea>
+    <h3>Nuevo Juego</h3>
+    <input id="inputJuegoTitulo" placeholder="Título"/>
+    <textarea id="inputJuegoDesc" placeholder="Descripción"></textarea>
     <input id="inputJuegoImg" placeholder="URL imagen"/>
     <button onclick="agregarJuego()">Agregar juego</button>
   </section>
 
 </main>
 
-<script src="script.js?v=5" defer></script>
+<script src="script.js?v=6" defer></script>
 </body>
 </html>
