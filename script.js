@@ -139,4 +139,14 @@ function renderGames(){
     }
     listaJuegos.appendChild(s);
   });
+  function switchView(v) {
+  vistaHome.style.display = "none";
+  vistaGames.style.display = "none";
+
+  const target = v === "home" ? vistaHome : vistaGames;
+  target.style.display = "block";
+  target.style.animation = "none";
+  target.offsetHeight; // reset animación
+  target.style.animation = "fadeUp 0.6s ease";
+}
 }
