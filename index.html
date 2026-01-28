@@ -54,6 +54,14 @@ body.light {
   margin-top: 8px;
   transition: transform .15s, opacity .15s;
 }
+
+#themeToggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 20px;
+  background: none;
+}
 button:hover { opacity: .9; transform: scale(1.03); }
     input, textarea { width: 100%; padding: 8px; margin-top: 6px; }
 
@@ -77,8 +85,8 @@ button:hover { opacity: .9; transform: scale(1.03); }
 
   
 
-  <header>
-  <button id="themeToggle" style="position:absolute;top:15px;right:15px">🌙</button>
+  <header style="position:relative">
+  <button id="themeToggle" aria-label="Cambiar tema">🌙</button>
   <h1 id="titulo">Mi Página Personal</h1>
   <p id="subtitulo">Web privada y personalizable</p>
 </header>
@@ -112,7 +120,7 @@ button:hover { opacity: .9; transform: scale(1.03); }
       <button onclick="agregarPublicacion()">Publicar</button>
     </section>
 
-    <button id="btnDev">Modo desarrollador</button>
+    <button id="btnDev" style="position:fixed;bottom:20px;right:20px;z-index:999">🛠️ Admin</button>
   </main>
 
   <footer>© 2026 - Mi página web</footer>
@@ -126,12 +134,16 @@ let posts = [];
 
 /* === INICIO === */
 window.onload = () => {
-  aplicarTema();
   cargarContenido();
   cargarPublicaciones();
 
-  // asegurar activación del panel admin
-  document.getElementById('btnDev').addEventListener('click', activarEditor);
+  const btnDev = document.getElementById('btnDev');
+  const btnTheme = document.getElementById('themeToggle');
+
+  if (btnDev) btnDev.addEventListener('click', activarEditor);
+  if (btnTheme) btnTheme.addEventListener('click', toggleTema);
+
+  aplicarTema();
 };
 
 function activarEditor() {
