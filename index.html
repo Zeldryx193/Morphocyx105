@@ -86,7 +86,7 @@ button:hover { opacity: .9; transform: scale(1.03); }
   
 
   <header style="position:relative">
-  <button id="themeToggle" aria-label="Cambiar tema">🌙</button>
+  <button id="themeToggle" type="button">🌙</button>
   <h1 id="titulo">Mi Página Personal</h1>
   <p id="subtitulo">Web privada y personalizable</p>
 </header>
@@ -120,52 +120,53 @@ button:hover { opacity: .9; transform: scale(1.03); }
       <button onclick="agregarPublicacion()">Publicar</button>
     </section>
 
-    <button id="btnDev" style="position:fixed;bottom:20px;right:20px;z-index:999">🛠️ Admin</button>
+    <button id="btnDev" type="button" style="position:fixed;bottom:20px;right:20px;z-index:999">🛠️ Admin</button>
   </main>
 
   <footer>© 2026 - Mi página web</footer>
 
   <script>
-/* === CÓDIGO DESARROLLADOR === */
+/* ========= CONFIG ========= */
 const CODIGO_DEV = "1234";
 
-/* === ESTADO === */
+/* ========= ESTADO ========= */
 let posts = [];
+let adminActivo = false;
 
-/* === INICIO === */
-window.onload = () => {
+/* ========= INIT ========= */
+document.addEventListener('DOMContentLoaded', () => {
   cargarContenido();
   cargarPublicaciones();
-
-  const btnDev = document.getElementById('btnDev');
-  const btnTheme = document.getElementById('themeToggle');
-
-  if (btnDev) btnDev.addEventListener('click', activarEditor);
-  if (btnTheme) btnTheme.addEventListener('click', toggleTema);
-
   aplicarTema();
-};
 
+  document.getElementById('btnDev').addEventListener('click', activarEditor);
+  document.getElementById('themeToggle').addEventListener('click', toggleTema);
+});
+
+/* ========= ADMIN ========= */
 function activarEditor() {
-  const editor = document.getElementById('editor');
   const codigo = prompt('Código desarrollador');
+  if (codigo !== CODIGO_DEV) return alert('Código incorrecto');
 
-  if (codigo === null) return;
-
-  if (codigo === CODIGO_DEV) {
-    editor.style.display = 'block';
-    renderPublicaciones();
-
-  document.getElementById('themeToggle').addEventListener('click', toggleTema); // refresca botones admin
-  } else {
-    alert('Código incorrecto');
-  }
-} else if (codigo !== null) {
-    alert('Código incorrecto');
-  }
+  adminActivo = true;
+  document.getElementById('editor').style.display = 'block';
+  renderPublicaciones();
 }
 
-/* === CONTENIDO PRINCIPAL === */
+/* ========= TEMA ========= */
+function aplicarTema() {
+  const tema = localStorage.getItem('tema') || 'dark';
+  document.body.classList.toggle('light', tema === 'light');
+  document.getElementById('themeToggle').textContent = tema === 'light' ? '🌞' : '🌙';
+}
+
+function toggleTema() {
+  const esLight = document.body.classList.toggle('light');
+  localStorage.setItem('tema', esLight ? 'light' : 'dark');
+  aplicarTema();
+}
+
+/* ========= CONTENIDO ========= */
 function guardarContenido() {
   localStorage.setItem('titulo', inputTitulo.value);
   localStorage.setItem('descripcion', inputDescripcion.value);
@@ -179,12 +180,10 @@ function cargarContenido() {
 }
 
 function restaurarContenido() {
-  if (confirm('¿Restaurar contenido principal?')) {
-    cargarContenido();
-  }
+  cargarContenido();
 }
 
-/* === PUBLICACIONES (JSON) === */
+/* ========= PUBLICACIONES ========= */
 function cargarPublicaciones() {
   posts = JSON.parse(localStorage.getItem('posts')) || [];
   renderPublicaciones();
@@ -211,7 +210,6 @@ function agregarPublicacion() {
 }
 
 function eliminarPublicacion(id) {
-  if (!confirm('¿Eliminar esta publicación?')) return;
   posts = posts.filter(p => p.id !== id);
   guardarPublicaciones();
   renderPublicaciones();
@@ -226,27 +224,15 @@ function editarPublicacion(id) {
   renderPublicaciones();
 }
 
-function aplicarTema() {
-  const tema = localStorage.getItem('tema') || 'dark';
-  document.body.classList.toggle('light', tema === 'light');
-  document.getElementById('themeToggle').textContent = tema === 'light' ? '🌞' : '🌙';
-}
-
-function toggleTema() {
-  const esLight = document.body.classList.toggle('light');
-  localStorage.setItem('tema', esLight ? 'light' : 'dark');
-  aplicarTema();
-}
-
 function renderPublicaciones() {
   publicaciones.innerHTML = '';
 
   posts.forEach(post => {
     const div = document.createElement('div');
     div.style.marginBottom = '20px';
-    div.style.background = '#0f172a';
+    div.style.background = 'var(--bg-card)';
     div.style.padding = '15px';
-    div.style.borderRadius = '8px';
+    div.style.borderRadius = '10px';
 
     if (post.texto) {
       const p = document.createElement('p');
@@ -263,18 +249,18 @@ function renderPublicaciones() {
       div.appendChild(img);
     }
 
-    if (document.getElementById('editor').style.display === 'block') {
-      const btnEditar = document.createElement('button');
-      btnEditar.textContent = 'Editar';
-      btnEditar.onclick = () => editarPublicacion(post.id);
+    if (adminActivo) {
+      const btnE = document.createElement('button');
+      btnE.textContent = 'Editar';
+      btnE.onclick = () => editarPublicacion(post.id);
 
-      const btnEliminar = document.createElement('button');
-      btnEliminar.textContent = 'Eliminar';
-      btnEliminar.style.marginLeft = '10px';
-      btnEliminar.onclick = () => eliminarPublicacion(post.id);
+      const btnX = document.createElement('button');
+      btnX.textContent = 'Eliminar';
+      btnX.style.marginLeft = '10px';
+      btnX.onclick = () => eliminarPublicacion(post.id);
 
-      div.appendChild(btnEditar);
-      div.appendChild(btnEliminar);
+      div.appendChild(btnE);
+      div.appendChild(btnX);
     }
 
     publicaciones.appendChild(div);
