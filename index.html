@@ -76,7 +76,7 @@
       <button onclick="agregarPublicacion()">Publicar</button>
     </section>
 
-    <button onclick="activarEditor()">Modo desarrollador</button>
+    <button id="btnDev">Modo desarrollador</button>
   </main>
 
   <footer>© 2026 - Mi página web</footer>
@@ -92,13 +92,24 @@ let posts = [];
 window.onload = () => {
   cargarContenido();
   cargarPublicaciones();
+
+  // asegurar activación del panel admin
+  document.getElementById('btnDev').addEventListener('click', activarEditor);
 };
 
 function activarEditor() {
+  const editor = document.getElementById('editor');
   const codigo = prompt('Código desarrollador');
+
+  if (codigo === null) return;
+
   if (codigo === CODIGO_DEV) {
-    document.getElementById('editor').style.display = 'block';
-  } else if (codigo !== null) {
+    editor.style.display = 'block';
+    renderPublicaciones(); // refresca botones admin
+  } else {
+    alert('Código incorrecto');
+  }
+} else if (codigo !== null) {
     alert('Código incorrecto');
   }
 }
