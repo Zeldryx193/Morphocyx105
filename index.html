@@ -7,16 +7,16 @@
 
   <style>
     :root {
-      --color-primario: #4f46e5;
-      --color-fondo: #f5f7fb;
-      --color-texto: #111827;
+      --color-primario: #1e3a8a;
+      --color-fondo: #020617;
+      --color-texto: #e5e7eb;
     }
 
     * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
     body { margin: 0; background: var(--color-fondo); color: var(--color-texto); }
 
     header { background: var(--color-primario); color: white; padding: 20px; text-align: center; }
-    main { padding: 30px; max-width: 1000px; margin: auto; display: none; }
+    main { padding: 30px; max-width: 1000px; margin: auto; }
 
     section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,.05); }
     button { background: var(--color-primario); color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; margin-top: 8px; }
@@ -40,13 +40,7 @@
 </head>
 <body>
 
-  <!-- LOGIN -->
-  <div id="login">
-    <h2>Acceso</h2>
-    <input id="loginEmail" placeholder="Correo" />
-    <input id="loginPass" type="password" placeholder="Contraseña" />
-    <button onclick="login()">Entrar</button>
-  </div>
+  
 
   <header>
     <h1 id="titulo">Mi Página Personal</h1>
@@ -92,33 +86,28 @@
   <footer>© 2026 - Mi página web</footer>
 
   <script>
-    /* === CREDENCIALES === */
-    const USER_EMAIL = "admin@miweb.com";
-    const USER_PASS = "admin123";
-    const CODIGO_DEV = "1234";
+    /* === CÓDIGO DESARROLLADOR === */
+    const CODIGO_DEV = "1234"; // cambia este código si quieres
 
-    /* === LOGIN === */
-    function login() {
-      if (loginEmail.value === USER_EMAIL && loginPass.value === USER_PASS) {
-        login.style.display = 'none';
-        contenido.style.display = 'block';
-        cargarContenido();
-      } else alert('Credenciales incorrectas');
-    }
+    /* === CARGAR CONTENIDO GUARDADO === */
+    window.onload = () => {
+      cargarContenido();
+    };
 
-    /* === EDITOR === */
     function activarEditor() {
       const codigo = prompt('Código desarrollador');
-      if (codigo === CODIGO_DEV) editor.style.display = 'block';
-      else alert('Código incorrecto');
+      if (codigo === CODIGO_DEV) {
+        editor.style.display = 'block';
+      } else {
+        alert('Código incorrecto');
+      }
     }
 
-    /* === GUARDADO LOCAL === */
     function guardarContenido() {
       localStorage.setItem('titulo', inputTitulo.value);
       localStorage.setItem('descripcion', inputDescripcion.value);
-      document.getElementById('titulo').textContent = inputTitulo.value;
-      document.getElementById('descripcion').textContent = inputDescripcion.value;
+      titulo.textContent = inputTitulo.value;
+      descripcion.textContent = inputDescripcion.value;
     }
 
     function cargarContenido() {
@@ -129,17 +118,20 @@
     }
 
     function cambiarColor() {
-      const c = ['#4f46e5','#16a34a','#dc2626','#0ea5e9'][Math.floor(Math.random()*4)];
-      document.documentElement.style.setProperty('--color-primario', c);
+      const colores = ['#1e3a8a', '#020617', '#0f172a'];
+      const color = colores[Math.floor(Math.random() * colores.length)];
+      document.documentElement.style.setProperty('--color-primario', color);
     }
 
     function agregarImagen() {
+      if (!inputImagen.value) return;
       galeria.innerHTML += `<img src="${inputImagen.value}">`;
       localStorage.setItem('galeria', galeria.innerHTML);
       inputImagen.value = '';
     }
 
     function agregarNota() {
+      if (!inputNota.value) return;
       notas.innerHTML += `<li>${inputNota.value}</li>`;
       localStorage.setItem('notas', notas.innerHTML);
       inputNota.value = '';
