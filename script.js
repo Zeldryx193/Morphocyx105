@@ -3,6 +3,12 @@
 // ============================================
 
 const proyectos = [
+// ============================================
+// CATEGORIAS
+// juegos
+// web
+// otros
+// ============================================
     {
         id: 1,
         titulo: "Juego de Plataformas",
@@ -13,44 +19,12 @@ const proyectos = [
     },
     {
         id: 2,
-        titulo: "Puzzle Adventure",
-        descripcion: "Resuelve acertijos en un mundo mágico lleno de desafíos mentales",
-        categoria: "juegos",
-        emoji: "🧩",
-        link: "#"
-    },
-    {
-        id: 3,
         titulo: "Portfolio Web",
         descripcion: "Sitio web moderno y responsive para mostrar proyectos personales",
         categoria: "web",
         emoji: "🌐",
         link: "#"
     },
-    {
-        id: 4,
-        titulo: "App de Tareas",
-        descripcion: "Aplicación minimalista para gestionar tus tareas diarias",
-        categoria: "web",
-        emoji: "✅",
-        link: "#"
-    },
-    {
-        id: 5,
-        titulo: "Generador de Arte",
-        descripcion: "Herramienta experimental para crear arte generativo",
-        categoria: "otros",
-        emoji: "🎨",
-        link: "#"
-    },
-    {
-        id: 6,
-        titulo: "Bot de Discord",
-        descripcion: "Bot personalizado con múltiples funcionalidades para servidores",
-        categoria: "otros",
-        emoji: "🤖",
-        link: "#"
-    }
 ];
 
 // ============================================
@@ -65,41 +39,6 @@ const notasBlog = [
         fecha: "28 Enero 2026",
         link: "#"
     },
-    {
-        id: 2,
-        titulo: "5 consejos para aprender programación",
-        extracto: "Tips prácticos que me hubiera gustado conocer cuando empecé a programar. Desde la mentalidad hasta las herramientas.",
-        fecha: "20 Enero 2026",
-        link: "#"
-    },
-    {
-        id: 3,
-        titulo: "Mis herramientas favoritas de desarrollo",
-        extracto: "Una lista de las aplicaciones, frameworks y recursos que uso diariamente en mis proyectos.",
-        fecha: "15 Enero 2026",
-        link: "#"
-    },
-    {
-        id: 4,
-        titulo: "El arte del pixel art",
-        extracto: "Explorando las técnicas y la filosofía detrás del pixel art en los videojuegos modernos.",
-        fecha: "10 Enero 2026",
-        link: "#"
-    },
-    {
-        id: 5,
-        titulo: "Optimización web: lo básico",
-        extracto: "Cómo hacer que tu sitio web cargue más rápido y ofrezca mejor experiencia al usuario.",
-        fecha: "5 Enero 2026",
-        link: "#"
-    },
-    {
-        id: 6,
-        titulo: "Mi setup de trabajo 2026",
-        extracto: "Todo sobre mi espacio de trabajo, hardware, software y configuración para máxima productividad.",
-        fecha: "1 Enero 2026",
-        link: "#"
-    }
 ];
 
 // ============================================
@@ -114,79 +53,13 @@ const publicaciones = [
         fecha: "28 Enero 2026, 15:30",
         texto: `¡Hola a todos! 👋
 
-Estoy emocionado de compartir con ustedes mi nuevo proyecto en el que he estado trabajando durante las últimas semanas.
-
-Es un juego de plataformas con mecánicas únicas que espero que disfruten. ¡Pronto más detalles!`,
+Estoy emocionado de compartir con ustedes mi nuevo pagina que desarrollé
+espero que disfruten. ¡Pronto más detalles!`,
         imagenes: [
-            "https://via.placeholder.com/800x500/ffd166/1a2142?text=Captura+del+Juego"
+            " "
         ],
         tags: ["juegos", "desarrollo", "proyecto"],
-        likes: 42,
-        comentarios: 8
     },
-    {
-        id: 2,
-        autor: "Tu Nombre",
-        avatar: "🚀",
-        fecha: "26 Enero 2026, 10:15",
-        texto: `Reflexión del día: La mejor forma de aprender programación es construyendo proyectos reales.
-
-No te quedes solo en tutoriales, ¡crea algo tuyo! 💪`,
-        imagenes: null,
-        tags: ["programación", "aprendizaje"],
-        likes: 67,
-        comentarios: 12
-    },
-    {
-        id: 3,
-        autor: "Tu Nombre",
-        avatar: "🚀",
-        fecha: "24 Enero 2026, 18:45",
-        texto: `Algunos screenshots de mi progreso esta semana 📸
-
-¿Qué les parece el nuevo diseño de UI?`,
-        imagenes: [
-            "https://via.placeholder.com/600x400/ff6b35/ffffff?text=Screenshot+1",
-            "https://via.placeholder.com/600x400/ffd166/1a2142?text=Screenshot+2",
-            "https://via.placeholder.com/600x400/06ffa5/1a2142?text=Screenshot+3"
-        ],
-        tags: ["desarrollo", "UI/UX"],
-        likes: 89,
-        comentarios: 15
-    },
-    {
-        id: 4,
-        autor: "Tu Nombre",
-        avatar: "🚀",
-        fecha: "22 Enero 2026, 12:00",
-        texto: `Mi setup actualizado para 2026 🖥️⌨️
-
-Después de muchos ajustes, finalmente tengo un espacio de trabajo con el que estoy 100% feliz.`,
-        imagenes: [
-            "https://via.placeholder.com/800x600/667eea/ffffff?text=Mi+Setup+de+Trabajo"
-        ],
-        tags: ["setup", "productividad"],
-        likes: 124,
-        comentarios: 23
-    },
-    {
-        id: 5,
-        autor: "Tu Nombre",
-        avatar: "🚀",
-        fecha: "20 Enero 2026, 09:30",
-        texto: `Tip rápido: Si estás empezando con desarrollo web, estos son los recursos que más me ayudaron:
-
-• MDN Web Docs
-• FreeCodeCamp
-• JavaScript.info
-• CSS-Tricks
-
-¿Cuáles son tus favoritos? 🤔`,
-        imagenes: null,
-        tags: ["recursos", "webdev"],
-        likes: 156,
-        comentarios: 34
-    }
 ];
 
 // ============================================
