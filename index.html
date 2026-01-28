@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<script src="script.js?v=2"></script>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -90,9 +89,15 @@ button:hover { opacity: .9; transform: scale(1.03); }
   <button id="themeToggle" type="button">🌙</button>
   <h1 id="titulo">Mi Página Personal</h1>
   <p id="subtitulo">Web privada y personalizable</p>
+  <nav style="margin-top:15px">
+    <button id="tabHome">🏠 Hogar</button>
+    <button id="tabGames">🎮 Juegos</button>
+  </nav>
 </header>
 
   <main id="contenido">
+  <!-- HOGAR -->
+  <div id="vistaHome">
     <section>
       <h2>Sobre mí</h2>
       <p id="descripcion"></p>
@@ -124,150 +129,32 @@ button:hover { opacity: .9; transform: scale(1.03); }
     <button id="btnDev" type="button" style="position:fixed;bottom:20px;right:20px;z-index:999">🛠️ Admin</button>
   </main>
 
-  <footer>© 2026 - Mi página web</footer>
+    </div>
 
-  <script>
-/* ========= CONFIG ========= */
-const CODIGO_DEV = "1234";
+  <!-- JUEGOS -->
+  <div id="vistaGames" style="display:none">
+    <section>
+      <h2>🎮 Mis Juegos</h2>
+      <p>Aquí puedes publicar información sobre tus juegos.</p>
+    </section>
 
-/* ========= ESTADO ========= */
-let posts = [];
-let adminActivo = false;
+    <section class="editor" id="editorJuegos">
+      <h3>Nueva publicación de juego</h3>
+      <input id="inputJuegoTitulo" placeholder="Nombre del juego" />
+      <textarea id="inputJuegoDesc" placeholder="Descripción del juego"></textarea>
+      <input id="inputJuegoImg" placeholder="URL imagen del juego" />
+      <button onclick="agregarJuego()">Publicar juego</button>
+    </section>
 
-/* ========= INIT ========= */
-document.addEventListener('DOMContentLoaded', () => {
-  cargarContenido();
-  cargarPublicaciones();
-  aplicarTema();
+    <section>
+      <div id="listaJuegos"></div>
+    </section>
+  </div>
 
-  document.getElementById('btnDev').addEventListener('click', activarEditor);
-  document.getElementById('themeToggle').addEventListener('click', toggleTema);
-});
+<footer>© 2026 - Mi página web</footer>
 
-/* ========= ADMIN ========= */
-function activarEditor() {
-  const codigo = prompt('Código desarrollador');
-  if (codigo !== CODIGO_DEV) return alert('Código incorrecto');
-
-  adminActivo = true;
-  document.getElementById('editor').style.display = 'block';
-  renderPublicaciones();
-}
-
-/* ========= TEMA ========= */
-function aplicarTema() {
-  const tema = localStorage.getItem('tema') || 'dark';
-  document.body.classList.toggle('light', tema === 'light');
-  document.getElementById('themeToggle').textContent = tema === 'light' ? '🌞' : '🌙';
-}
-
-function toggleTema() {
-  const esLight = document.body.classList.toggle('light');
-  localStorage.setItem('tema', esLight ? 'light' : 'dark');
-  aplicarTema();
-}
-
-/* ========= CONTENIDO ========= */
-function guardarContenido() {
-  localStorage.setItem('titulo', inputTitulo.value);
-  localStorage.setItem('descripcion', inputDescripcion.value);
-  titulo.textContent = inputTitulo.value;
-  descripcion.textContent = inputDescripcion.value;
-}
-
-function cargarContenido() {
-  titulo.textContent = localStorage.getItem('titulo') || 'Mi Página Personal';
-  descripcion.textContent = localStorage.getItem('descripcion') || 'Contenido privado';
-}
-
-function restaurarContenido() {
-  cargarContenido();
-}
-
-/* ========= PUBLICACIONES ========= */
-function cargarPublicaciones() {
-  posts = JSON.parse(localStorage.getItem('posts')) || [];
-  renderPublicaciones();
-}
-
-function guardarPublicaciones() {
-  localStorage.setItem('posts', JSON.stringify(posts));
-}
-
-function agregarPublicacion() {
-  if (!inputPostTexto.value && !inputPostImagen.value) return;
-
-  posts.push({
-    id: Date.now(),
-    texto: inputPostTexto.value,
-    imagen: inputPostImagen.value
-  });
-
-  guardarPublicaciones();
-  renderPublicaciones();
-
-  inputPostTexto.value = '';
-  inputPostImagen.value = '';
-}
-
-function eliminarPublicacion(id) {
-  posts = posts.filter(p => p.id !== id);
-  guardarPublicaciones();
-  renderPublicaciones();
-}
-
-function editarPublicacion(id) {
-  const post = posts.find(p => p.id === id);
-  const nuevoTexto = prompt('Editar texto', post.texto);
-  if (nuevoTexto === null) return;
-  post.texto = nuevoTexto;
-  guardarPublicaciones();
-  renderPublicaciones();
-}
-
-function renderPublicaciones() {
-  publicaciones.innerHTML = '';
-
-  posts.forEach(post => {
-    const div = document.createElement('div');
-    div.style.marginBottom = '20px';
-    div.style.background = 'var(--bg-card)';
-    div.style.padding = '15px';
-    div.style.borderRadius = '10px';
-
-    if (post.texto) {
-      const p = document.createElement('p');
-      p.textContent = post.texto;
-      div.appendChild(p);
-    }
-
-    if (post.imagen) {
-      const img = document.createElement('img');
-      img.src = post.imagen;
-      img.style.width = '100%';
-      img.style.borderRadius = '8px';
-      img.style.marginTop = '10px';
-      div.appendChild(img);
-    }
-
-    if (adminActivo) {
-      const btnE = document.createElement('button');
-      btnE.textContent = 'Editar';
-      btnE.onclick = () => editarPublicacion(post.id);
-
-      const btnX = document.createElement('button');
-      btnX.textContent = 'Eliminar';
-      btnX.style.marginLeft = '10px';
-      btnX.onclick = () => eliminarPublicacion(post.id);
-
-      div.appendChild(btnE);
-      div.appendChild(btnX);
-    }
-
-    publicaciones.appendChild(div);
-  });
-}
-</script>
+  <!-- JS externo con versionado para evitar caché -->
+<script src="script.js?v=2"></script>
 
 </body>
 </html>
