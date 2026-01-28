@@ -34,8 +34,8 @@ const proyectos = [
 const notasBlog = [
     {
         id: 1,
-        titulo: "Cómo empecé en el desarrollo de juegos",
-        extracto: "Mi viaje desde los primeros pasos hasta crear mi primer juego completo. Lecciones aprendidas y errores cometidos.",
+        titulo: "Ideas",
+        extracto: "Aqui publicare Ideas sobre algunos juegos que tengo en mente y si sobre se me ocurre crear algo con ellas xd.",
         fecha: "28 Enero 2026",
         link: "#"
     },
@@ -49,11 +49,11 @@ const publicaciones = [
     {
         id: 1,
         autor: "Tu Nombre",
-        avatar: "🚀",
+        avatar: "https://i.imgur.com/z4vfFKw.jpeg",
         fecha: "28 Enero 2026, 15:30",
         texto: `¡Hola a todos! 👋
 
-Estoy emocionado de compartir con ustedes mi nuevo pagina que desarrollé
+Estoy emocionado de compartir con ustedes mi nueva pagina que desarrollé
 espero que disfruten. ¡Pronto más detalles!`,
         imagenes: [
             " "
