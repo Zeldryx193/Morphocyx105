@@ -169,6 +169,5 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarContenido();
   cargarPublicaciones();
   cargarJuegos();
-
-});
 <script src="script.js?v=9" defer></script>
+});
