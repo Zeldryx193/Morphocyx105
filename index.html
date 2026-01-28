@@ -6,19 +6,23 @@
 <title>Mi Página Personal</title>
 
 <style>
-:root{
+:root {
   --bg-dark:#020617;
   --bg-light:#f3f4f6;
   --card-dark:#0f172a;
-  --card-light:#ffffff;
   --text-dark:#e5e7eb;
   --text-light:#020617;
   --primary:#2563eb;
 }
 
+*{
+  box-sizing:border-box;
+  transition:background .4s,color .4s,transform .4s,box-shadow .4s;
+}
+
 body{
   margin:0;
-  font-family:Arial, Helvetica, sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
   background:var(--bg-dark);
   color:var(--text-dark);
 }
@@ -35,6 +39,7 @@ header{
   padding:15px 20px;
   background:var(--primary);
   color:white;
+  animation:fadeUp .8s ease;
 }
 
 button{
@@ -45,6 +50,9 @@ button{
   border-radius:8px;
   cursor:pointer;
 }
+
+button:hover{transform:scale(1.05)}
+button:active{transform:scale(.97)}
 
 main{
   max-width:1000px;
@@ -57,13 +65,21 @@ section{
   padding:20px;
   border-radius:12px;
   margin-bottom:20px;
+  animation:fadeUp .6s ease forwards;
 }
 
-body.light section{background:var(--card-light)}
+body.light section{background:white}
 
-.editor{display:none;border:2px dashed var(--primary)}
+.editor{
+  display:none;
+  border:2px dashed var(--primary);
+}
 
-img{max-width:100%;border-radius:8px;margin-top:10px}
+/* Animación base */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
 </style>
 </head>
 
@@ -76,7 +92,7 @@ img{max-width:100%;border-radius:8px;margin-top:10px}
   </nav>
   <div>
     <button id="themeToggle">🌙</button>
-    <button id="btnLogin">Login</button>
+    <button id="btnAdmin">Admin</button>
   </div>
 </header>
 
@@ -84,7 +100,7 @@ img{max-width:100%;border-radius:8px;margin-top:10px}
 
 <div id="vistaHome">
   <section>
-    <h1 id="titulo">Mi Página</h1>
+    <h1 id="titulo">Mi Página Personal</h1>
     <p id="descripcion"></p>
   </section>
 
@@ -96,45 +112,34 @@ img{max-width:100%;border-radius:8px;margin-top:10px}
 
 <div id="vistaGames" style="display:none">
   <section>
-    <h2>Juegos</h2>
+    <h2>Mis Juegos</h2>
     <div id="listaJuegos"></div>
   </section>
 </div>
 
-<section class="editor" id="panelAdmin">
+<section class="editor" id="editor">
   <h2>Panel Admin</h2>
 
-  <h3>🎨 Colores</h3>
-  <input type="color" id="colorPrimary">
-  <input type="color" id="colorBgDark">
-  <input type="color" id="colorBgLight">
-  <button onclick="guardarColores()">Guardar colores</button>
-
-  <hr>
-
-  <h3>✏️ Textos</h3>
   <input id="inputTitulo" placeholder="Título">
   <textarea id="inputDescripcion" placeholder="Descripción"></textarea>
   <button onclick="guardarContenido()">Guardar textos</button>
 
-  <hr>
+  <hr><br>
 
-  <h3>📝 Publicación</h3>
-  <textarea id="inputPostTexto"></textarea>
-  <input type="file" id="inputPostImg">
+  <textarea id="inputPostTexto" placeholder="Texto publicación"></textarea>
+  <input id="inputPostImagen" placeholder="URL imagen">
   <button onclick="agregarPublicacion()">Publicar</button>
+</section>
 
-  <hr>
-
-  <h3>🎮 Juego</h3>
-  <input id="inputJuegoTitulo">
-  <textarea id="inputJuegoDesc"></textarea>
-  <input type="file" id="inputJuegoImg">
+<section class="editor" id="editorJuegos">
+  <input id="inputJuegoTitulo" placeholder="Título juego">
+  <textarea id="inputJuegoDesc" placeholder="Descripción juego"></textarea>
+  <input id="inputJuegoImg" placeholder="URL imagen">
   <button onclick="agregarJuego()">Agregar juego</button>
 </section>
 
 </main>
 
-<script src="script.js?v=7" defer></script>
+<script src="script.js"></script>
 </body>
 </html>
