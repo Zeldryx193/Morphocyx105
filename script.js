@@ -1,9 +1,3 @@
-const btnAdmin = document.getElementById("btnAdmin");
-const editor = document.getElementById("editor");
-const editorJuegos = document.getElementById("editorJuegos");// Vistas
-const vistaHome = document.getElementById("vistaHome");
-const vistaGames = document.getElementById("vistaGames");
-
 // Tabs
 tabHome.onclick = () => switchView("home");
 tabGames.onclick = () => switchView("games");
@@ -25,16 +19,19 @@ themeToggle.onclick=()=>{
 };
 
 // Admin
-btnAdmin.onclick = () => {
-  const visible = editor.style.display === "block";
+const btnDev = document.getElementById("btnDev");
+const editor = document.getElementById("editor");
+const editorJuegos = document.getElementById("editorJuegos");
 
-  editor.style.display = visible ? "none" : "block";
-  editorJuegos.style.display = visible ? "none" : "block";
+btnDev.addEventListener("click", () => {
+  const abierto = editor.style.display === "block";
 
-  editor.style.animation = "fadeUp .5s ease";
-  editorJuegos.style.animation = "fadeUp .5s ease";
-};
+  editor.style.display = abierto ? "none" : "block";
+  editorJuegos.style.display = abierto ? "none" : "block";
 
+  editor.style.animation = "fadeUp 0.5s ease";
+  editorJuegos.style.animation = "fadeUp 0.5s ease";
+});
 // Contenido base
 const titulo=document.getElementById("titulo");
 const descripcion=document.getElementById("descripcion");
