@@ -14,44 +14,44 @@ const proyectos = [
     },
     {
         id: 2,
-        titulo: "Puzzle Adventure",
-        descripcion: "Resuelve acertijos en un mundo mágico lleno de desafíos mentales",
+        titulo: "---",
+        descripcion: "noai :p",
         categoria: "juegos",
         emoji: "🧩",
         link: "#"
     },
     {
         id: 3,
-        titulo: "Portfolio Web",
-        descripcion: "Sitio web moderno y responsive para mostrar proyectos personales",
-        categoria: "web",
-        emoji: "🌐",
+        titulo: "---",
+        descripcion: "noai :p",
+        categoria: "juegos",
+        emoji: "🧩",
         link: "#"
     },
     {
         id: 4,
-        titulo: "App de Tareas",
-        descripcion: "Aplicación minimalista para gestionar tus tareas diarias",
-        categoria: "web",
-        emoji: "✅",
+        titulo: "---",
+        descripcion: "noai :p",
+        categoria: "juegos",
+        emoji: "🧩",
         link: "#"
     },
     {
         id: 5,
-        titulo: "Generador de Arte",
-        descripcion: "Herramienta experimental para crear arte generativo",
-        categoria: "otros",
-        emoji: "🎨",
+        titulo: "---",
+        descripcion: "noai :p",
+        categoria: "juegos",
+        emoji: "🧩",
         link: "#"
     },
     {
         id: 6,
-        titulo: "Bot de Discord",
-        descripcion: "Bot personalizado con múltiples funcionalidades para servidores",
-        categoria: "otros",
-        emoji: "🤖",
+        titulo: "---",
+        descripcion: "noai :p",
+        categoria: "juegos",
+        emoji: "🧩",
         link: "#"
-    }
+    },
 ];
 
 // Aquí puedes agregar tus notas/posts de blog
@@ -63,41 +63,6 @@ const notasBlog = [
         fecha: "28 Enero 2026",
         link: "#"
     },
-    {
-        id: 2,
-        titulo: "5 consejos para aprender programación",
-        extracto: "Tips prácticos que me hubiera gustado conocer cuando empecé a programar. Desde la mentalidad hasta las herramientas.",
-        fecha: "20 Enero 2026",
-        link: "#"
-    },
-    {
-        id: 3,
-        titulo: "Mis herramientas favoritas de desarrollo",
-        extracto: "Una lista de las aplicaciones, frameworks y recursos que uso diariamente en mis proyectos.",
-        fecha: "15 Enero 2026",
-        link: "#"
-    },
-    {
-        id: 4,
-        titulo: "El arte del pixel art",
-        extracto: "Explorando las técnicas y la filosofía detrás del pixel art en los videojuegos modernos.",
-        fecha: "10 Enero 2026",
-        link: "#"
-    },
-    {
-        id: 5,
-        titulo: "Optimización web: lo básico",
-        extracto: "Cómo hacer que tu sitio web cargue más rápido y ofrezca mejor experiencia al usuario.",
-        fecha: "5 Enero 2026",
-        link: "#"
-    },
-    {
-        id: 6,
-        titulo: "Mi setup de trabajo 2026",
-        extracto: "Todo sobre mi espacio de trabajo, hardware, software y configuración para máxima productividad.",
-        fecha: "1 Enero 2026",
-        link: "#"
-    }
 ];
 
 // ============================================
