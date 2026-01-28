@@ -153,9 +153,10 @@ function renderJuegos() {
 
   juegos.forEach(j => {
     const card = document.createElement('section');
+    card.style.marginBottom = '20px';
+
     const h = document.createElement('h3');
     h.textContent = j.titulo;
-
     card.appendChild(h);
 
     if (j.descripcion) {
@@ -172,8 +173,18 @@ function renderJuegos() {
       card.appendChild(img);
     }
 
+    // 🔥 BOTÓN ELIMINAR SOLO EN MODO ADMIN
+    if (adminActivo) {
+      const btnEliminar = document.createElement('button');
+      btnEliminar.textContent = 'Eliminar';
+      btnEliminar.style.marginTop = '10px';
+      btnEliminar.onclick = () => eliminarJuego(j.id);
+      card.appendChild(btnEliminar);
+    }
+
     listaJuegos.appendChild(card);
   });
+}
   function eliminarJuego(id) {
   if (!confirm('¿Eliminar este juego?')) return;
   juegos = juegos.filter(j => j.id !== id);
