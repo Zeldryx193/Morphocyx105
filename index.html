@@ -2,14 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mi Página Personal</title>
 
   <style>
     :root {
       --bg-dark: #020617;
       --bg-light: #f3f4f6;
-      --bg-card: #0f172a;
+      --card-dark: #0f172a;
       --text-dark: #e5e7eb;
       --text-light: #020617;
       --primary: #2563eb;
@@ -28,16 +28,16 @@
     }
 
     header {
-      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 15px 20px;
       background: var(--primary);
       color: white;
     }
 
     nav button {
-      margin-right: 8px;
+      margin-right: 10px;
     }
 
     button {
@@ -56,10 +56,10 @@
     }
 
     section {
-      background: var(--bg-card);
+      background: var(--card-dark);
       padding: 20px;
-      margin-bottom: 20px;
       border-radius: 12px;
+      margin-bottom: 20px;
     }
 
     body.light section {
@@ -72,22 +72,23 @@
     }
   </style>
 </head>
+
 <body>
 
 <header>
- <nav>
-  <button id="tabHome">Hogar</button>
-  <button id="tabGames">Juegos</button>
-</nav>
-
+  <nav>
+    <button id="tabHome">Hogar</button>
+    <button id="tabGames">Juegos</button>
+  </nav>
   <div>
     <button id="themeToggle">🌙</button>
-    <button id="btnDev">🛠️</button>
+    <button id="btnDev">Admin</button>
   </div>
 </header>
 
 <main>
-  <!-- VISTA HOME -->
+
+  <!-- HOME -->
   <div id="vistaHome">
     <section>
       <h1 id="titulo">Mi Página Personal</h1>
@@ -100,7 +101,7 @@
     </section>
   </div>
 
-  <!-- VISTA JUEGOS -->
+  <!-- JUEGOS -->
   <div id="vistaGames" style="display:none">
     <section>
       <h2>Mis Juegos</h2>
@@ -110,30 +111,28 @@
 
   <!-- PANEL ADMIN -->
   <section class="editor" id="editor">
-    <h2>🛠️ Panel Admin</h2>
+    <h2>Panel Admin</h2>
 
-    <h3>Textos</h3>
-    <input id="inputTitulo" placeholder="Título" />
+    <input id="inputTitulo" placeholder="Título"/>
     <textarea id="inputDescripcion" placeholder="Descripción"></textarea>
-    <button onclick="guardarContenido()">Guardar</button>
+    <button onclick="guardarContenido()">Guardar textos</button>
 
     <hr><br>
 
-    <h3>Nueva publicación (Hogar)</h3>
-    <textarea id="inputPostTexto" placeholder="Texto"></textarea>
-    <input id="inputPostImagen" placeholder="URL imagen" />
+    <textarea id="inputPostTexto" placeholder="Texto publicación"></textarea>
+    <input id="inputPostImagen" placeholder="URL imagen"/>
     <button onclick="agregarPublicacion()">Publicar</button>
   </section>
 
   <section class="editor" id="editorJuegos">
-    <h3>Nuevo Juego</h3>
-    <input id="inputJuegoTitulo" placeholder="Título del juego" />
-    <textarea id="inputJuegoDesc" placeholder="Descripción"></textarea>
-    <input id="inputJuegoImg" placeholder="URL imagen" />
+    <input id="inputJuegoTitulo" placeholder="Título juego"/>
+    <textarea id="inputJuegoDesc" placeholder="Descripción juego"></textarea>
+    <input id="inputJuegoImg" placeholder="URL imagen"/>
     <button onclick="agregarJuego()">Agregar juego</button>
   </section>
+
 </main>
 
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5" defer></script>
 </body>
 </html>
