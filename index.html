@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Página Personal</title>
+
+  <style>
+    :root {
+      --color-primario: #4f46e5;
+      --color-fondo: #f5f7fb;
+      --color-texto: #111827;
+    }
+
+    * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+    body { margin: 0; background: var(--color-fondo); color: var(--color-texto); }
+
+    header { background: var(--color-primario); color: white; padding: 20px; text-align: center; }
+    main { padding: 30px; max-width: 1000px; margin: auto; display: none; }
+
+    section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,.05); }
+    button { background: var(--color-primario); color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; margin-top: 8px; }
+    input, textarea { width: 100%; padding: 8px; margin-top: 6px; }
+
+    .editor { display: none; border: 2px dashed var(--color-primario); }
+    .galeria { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    .galeria img { width: 100%; border-radius: 6px; }
+
+    #login {
+      max-width: 400px;
+      margin: 100px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,.1);
+    }
+
+    footer { text-align: center; padding: 15px; font-size: 14px; opacity: .7; }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="login">
+    <h2>Acceso</h2>
+    <input id="loginEmail" placeholder="Correo" />
+    <input id="loginPass" type="password" placeholder="Contraseña" />
+    <button onclick="login()">Entrar</button>
+  </div>
+
+  <header>
+    <h1 id="titulo">Mi Página Personal</h1>
+    <p id="subtitulo">Web privada y personalizable</p>
+  </header>
+
+  <main id="contenido">
+    <section>
+      <h2>Sobre mí</h2>
+      <p id="descripcion"></p>
+    </section>
+
+    <section>
+      <h2>Galería</h2>
+      <div class="galeria" id="galeria"></div>
+    </section>
+
+    <section>
+      <h2>Notas</h2>
+      <ul id="notas"></ul>
+    </section>
+
+    <section class="editor" id="editor">
+      <h2>Área de desarrollador</h2>
+
+      <input id="inputTitulo" placeholder="Título" />
+      <textarea id="inputDescripcion" placeholder="Descripción"></textarea>
+      <button onclick="guardarContenido()">Guardar cambios</button>
+      <button onclick="cambiarColor()">Cambiar color</button>
+
+      <hr><br>
+
+      <input id="inputImagen" placeholder="URL de imagen" />
+      <button onclick="agregarImagen()">Agregar imagen</button>
+
+      <input id="inputNota" placeholder="Nota" />
+      <button onclick="agregarNota()">Agregar nota</button>
+    </section>
+
+    <button onclick="activarEditor()">Modo desarrollador</button>
+  </main>
+
+  <footer>© 2026 - Mi página web</footer>
+
+  <script>
+    /* === CREDENCIALES === */
+    const USER_EMAIL = "admin@miweb.com";
+    const USER_PASS = "admin123";
+    const CODIGO_DEV = "1234";
+
+    /* === LOGIN === */
+    function login() {
+      if (loginEmail.value === USER_EMAIL && loginPass.value === USER_PASS) {
+        login.style.display = 'none';
+        contenido.style.display = 'block';
+        cargarContenido();
+      } else alert('Credenciales incorrectas');
+    }
+
+    /* === EDITOR === */
+    function activarEditor() {
+      const codigo = prompt('Código desarrollador');
+      if (codigo === CODIGO_DEV) editor.style.display = 'block';
+      else alert('Código incorrecto');
+    }
+
+    /* === GUARDADO LOCAL === */
+    function guardarContenido() {
+      localStorage.setItem('titulo', inputTitulo.value);
+      localStorage.setItem('descripcion', inputDescripcion.value);
+      document.getElementById('titulo').textContent = inputTitulo.value;
+      document.getElementById('descripcion').textContent = inputDescripcion.value;
+    }
+
+    function cargarContenido() {
+      titulo.textContent = localStorage.getItem('titulo') || 'Mi Página Personal';
+      descripcion.textContent = localStorage.getItem('descripcion') || 'Contenido privado';
+      galeria.innerHTML = localStorage.getItem('galeria') || '';
+      notas.innerHTML = localStorage.getItem('notas') || '';
+    }
+
+    function cambiarColor() {
+      const c = ['#4f46e5','#16a34a','#dc2626','#0ea5e9'][Math.floor(Math.random()*4)];
+      document.documentElement.style.setProperty('--color-primario', c);
+    }
+
+    function agregarImagen() {
+      galeria.innerHTML += `<img src="${inputImagen.value}">`;
+      localStorage.setItem('galeria', galeria.innerHTML);
+      inputImagen.value = '';
+    }
+
+    function agregarNota() {
+      notas.innerHTML += `<li>${inputNota.value}</li>`;
+      localStorage.setItem('notas', notas.innerHTML);
+      inputNota.value = '';
+    }
+  </script>
+
+</body>
+</html>
