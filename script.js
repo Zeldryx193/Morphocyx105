@@ -223,16 +223,6 @@ function crearPublicacion(pub, index) {
     content += `</div>`;
     
     const footer = `
-        <div class="pub-footer">
-            <div class="pub-stat">
-                <span class="pub-stat-icon">❤️</span>
-                <span>${pub.likes}</span>
-            </div>
-            <div class="pub-stat">
-                <span class="pub-stat-icon">💬</span>
-                <span>${pub.comentarios}</span>
-            </div>
-        </div>
     `;
     
     article.innerHTML = header + content + footer;
