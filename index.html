@@ -82,81 +82,131 @@
   <footer>© 2026 - Mi página web</footer>
 
   <script>
-    /* === CÓDIGO DESARROLLADOR === */
-    const CODIGO_DEV = "1234"; // cambia este código si quieres
+/* === CÓDIGO DESARROLLADOR === */
+const CODIGO_DEV = "1234";
 
-    /* === CARGAR CONTENIDO GUARDADO === */
-    window.onload = () => {
-      cargarContenido();
-    };
+/* === ESTADO === */
+let posts = [];
 
-    function activarEditor() {
-      const codigo = prompt('Código desarrollador');
-      if (codigo === CODIGO_DEV) {
-        editor.style.display = 'block';
-      } else {
-        alert('Código incorrecto');
-      }
+/* === INICIO === */
+window.onload = () => {
+  cargarContenido();
+  cargarPublicaciones();
+};
+
+function activarEditor() {
+  const codigo = prompt('Código desarrollador');
+  if (codigo === CODIGO_DEV) {
+    document.getElementById('editor').style.display = 'block';
+  } else if (codigo !== null) {
+    alert('Código incorrecto');
+  }
+}
+
+/* === CONTENIDO PRINCIPAL === */
+function guardarContenido() {
+  localStorage.setItem('titulo', inputTitulo.value);
+  localStorage.setItem('descripcion', inputDescripcion.value);
+  titulo.textContent = inputTitulo.value;
+  descripcion.textContent = inputDescripcion.value;
+}
+
+function cargarContenido() {
+  titulo.textContent = localStorage.getItem('titulo') || 'Mi Página Personal';
+  descripcion.textContent = localStorage.getItem('descripcion') || 'Contenido privado';
+}
+
+function restaurarContenido() {
+  if (confirm('¿Restaurar contenido principal?')) {
+    cargarContenido();
+  }
+}
+
+/* === PUBLICACIONES (JSON) === */
+function cargarPublicaciones() {
+  posts = JSON.parse(localStorage.getItem('posts')) || [];
+  renderPublicaciones();
+}
+
+function guardarPublicaciones() {
+  localStorage.setItem('posts', JSON.stringify(posts));
+}
+
+function agregarPublicacion() {
+  if (!inputPostTexto.value && !inputPostImagen.value) return;
+
+  posts.push({
+    id: Date.now(),
+    texto: inputPostTexto.value,
+    imagen: inputPostImagen.value
+  });
+
+  guardarPublicaciones();
+  renderPublicaciones();
+
+  inputPostTexto.value = '';
+  inputPostImagen.value = '';
+}
+
+function eliminarPublicacion(id) {
+  if (!confirm('¿Eliminar esta publicación?')) return;
+  posts = posts.filter(p => p.id !== id);
+  guardarPublicaciones();
+  renderPublicaciones();
+}
+
+function editarPublicacion(id) {
+  const post = posts.find(p => p.id === id);
+  const nuevoTexto = prompt('Editar texto', post.texto);
+  if (nuevoTexto === null) return;
+  post.texto = nuevoTexto;
+  guardarPublicaciones();
+  renderPublicaciones();
+}
+
+function renderPublicaciones() {
+  publicaciones.innerHTML = '';
+
+  posts.forEach(post => {
+    const div = document.createElement('div');
+    div.style.marginBottom = '20px';
+    div.style.background = '#0f172a';
+    div.style.padding = '15px';
+    div.style.borderRadius = '8px';
+
+    if (post.texto) {
+      const p = document.createElement('p');
+      p.textContent = post.texto;
+      div.appendChild(p);
     }
 
-    function guardarContenido() {
-      localStorage.setItem('titulo', inputTitulo.value);
-      localStorage.setItem('descripcion', inputDescripcion.value);
-      titulo.textContent = inputTitulo.value;
-      descripcion.textContent = inputDescripcion.value;
+    if (post.imagen) {
+      const img = document.createElement('img');
+      img.src = post.imagen;
+      img.style.width = '100%';
+      img.style.borderRadius = '8px';
+      img.style.marginTop = '10px';
+      div.appendChild(img);
     }
 
-    function cargarContenido() {
-      titulo.textContent = localStorage.getItem('titulo') || 'Mi Página Personal';
-      descripcion.textContent = localStorage.getItem('descripcion') || 'Contenido privado';
-      publicaciones.innerHTML = localStorage.getItem('publicaciones') || '';
+    if (document.getElementById('editor').style.display === 'block') {
+      const btnEditar = document.createElement('button');
+      btnEditar.textContent = 'Editar';
+      btnEditar.onclick = () => editarPublicacion(post.id);
+
+      const btnEliminar = document.createElement('button');
+      btnEliminar.textContent = 'Eliminar';
+      btnEliminar.style.marginLeft = '10px';
+      btnEliminar.onclick = () => eliminarPublicacion(post.id);
+
+      div.appendChild(btnEditar);
+      div.appendChild(btnEliminar);
     }
 
-    function restaurarContenido() {
-      if (confirm('¿Restaurar todo al último estado guardado?')) {
-        cargarContenido();
-      }
-    }
-
-    function agregarPublicacion() {
-      if (!inputPostTexto.value && !inputPostImagen.value) return;
-
-      const post = document.createElement('div');
-      post.style.marginBottom = '20px';
-
-      if (inputPostTexto.value) {
-        const p = document.createElement('p');
-        p.textContent = inputPostTexto.value;
-        post.appendChild(p);
-      }
-
-      if (inputPostImagen.value) {
-        const img = document.createElement('img');
-        img.src = inputPostImagen.value;
-        img.style.width = '100%';
-        img.style.borderRadius = '8px';
-        post.appendChild(img);
-      }
-
-      publicaciones.appendChild(post);
-      localStorage.setItem('publicaciones', publicaciones.innerHTML);
-
-      inputPostTexto.value = '';
-      inputPostImagen.value = '';
-    }
-
-    
-
-    ">`;
-      localStorage.setItem('galeria', galeria.innerHTML);
-      inputImagen.value = '';
-    }
-
-    </li>`;
-      localStorage.setItem('notas', notas.innerHTML);
-      inputNota.value = '';
-    }
-  </script>
+    publicaciones.appendChild(div);
+  });
+}
+</script>
 
 </body>
 </html>
