@@ -214,3 +214,337 @@ Sitio creado con:
 **¿Necesitas ayuda?** Revisa los comentarios en el código o busca tutoriales en línea.
 
 ¡Feliz codificación! 🚀
+
+# 📱 Guía de Publicaciones - Feed Estilo Twitter
+
+¡Tu nueva página de publicaciones está lista! Ahora puedes compartir pensamientos, imágenes y actualizaciones como en una red social.
+
+## 📁 Archivos Nuevos
+
+- **publicaciones.html** - Página de feed de publicaciones
+- **publicaciones.js** - Lógica y datos de las publicaciones
+- **GUIA_PUBLICACIONES.md** - Este archivo
+
+## ✨ Características
+
+✅ Feed estilo Twitter/X
+✅ Publicaciones con texto e imágenes
+✅ Múltiples imágenes por publicación (hasta 4)
+✅ Sistema de tags/hashtags
+✅ Vista de imagen en modal (clic para ampliar)
+✅ Contador de likes y comentarios
+✅ Diseño consistente con tu página principal
+✅ Modo claro/oscuro
+✅ Responsive (móviles y tablets)
+
+## 📝 Cómo Agregar Publicaciones
+
+### Opción 1: Editando el archivo publicaciones.js
+
+Abre `publicaciones.js` y busca el array `publicaciones` (línea 7):
+
+```javascript
+const publicaciones = [
+    {
+        id: 1,
+        autor: "Tu Nombre",
+        avatar: "🚀", // Emoji o URL de imagen
+        fecha: "28 Enero 2026, 15:30",
+        texto: `Tu texto aquí.
+        
+Puedes usar múltiples líneas.
+Y emojis también! 🎉`,
+        imagenes: [
+            "https://url-de-tu-imagen.com/imagen.jpg"
+        ], // null si no hay imágenes
+        tags: ["etiqueta1", "etiqueta2"],
+        likes: 42,
+        comentarios: 8
+    },
+    // Agrega más publicaciones aquí...
+];
+```
+
+### Opción 2: Desde la Consola del Navegador
+
+Puedes agregar publicaciones dinámicamente abriendo la consola del navegador (F12) y usando:
+
+#### Solo texto:
+```javascript
+agregarPublicacion(
+    "Tu Nombre",
+    "🚀",
+    "¡Este es mi primer post!",
+    null,
+    ["prueba"]
+);
+```
+
+#### Texto con una imagen:
+```javascript
+agregarPublicacion(
+    "Tu Nombre",
+    "🚀",
+    "Mira esta increíble foto",
+    ["https://url-de-tu-imagen.jpg"],
+    ["fotos", "viaje"]
+);
+```
+
+#### Texto con múltiples imágenes:
+```javascript
+agregarPublicacion(
+    "Tu Nombre",
+    "🚀",
+    "Galería de mi proyecto",
+    [
+        "https://imagen1.jpg",
+        "https://imagen2.jpg",
+        "https://imagen3.jpg"
+    ],
+    ["proyecto", "galería"]
+);
+```
+
+#### Solo imágenes (sin texto):
+```javascript
+agregarPublicacion(
+    "Tu Nombre",
+    "🚀",
+    "",
+    ["https://tu-imagen.jpg"],
+    ["foto"]
+);
+```
+
+## 🖼️ Sobre las Imágenes
+
+### Formatos de imagen soportados:
+- URLs directas de imágenes (jpg, png, gif, webp)
+- Imágenes desde tu repositorio de GitHub
+
+### Cómo subir imágenes a GitHub:
+
+1. **Opción A: Usar una carpeta "images"**
+   ```
+   tu-repositorio/
+   ├── index.html
+   ├── script.js
+   ├── publicaciones.html
+   ├── publicaciones.js
+   └── images/
+       ├── post1.jpg
+       ├── post2.png
+       └── post3.jpg
+   ```
+   
+   Luego usa: `"images/post1.jpg"` en tus publicaciones
+
+2. **Opción B: Usar GitHub Issues**
+   - Crea un issue en tu repositorio
+   - Arrastra y suelta una imagen
+   - Copia la URL que se genera automáticamente
+   - Úsala en tus publicaciones
+
+3. **Opción C: Servicios externos**
+   - Imgur (https://imgur.com)
+   - ImgBB (https://imgbb.com)
+   - Cloudinary (https://cloudinary.com)
+
+### Layouts de imágenes:
+
+- **1 imagen**: Ocupa todo el ancho
+- **2 imágenes**: Grid 2x1
+- **3 imágenes**: Primera imagen grande arriba, dos pequeñas abajo
+- **4+ imágenes**: Grid 2x2 (solo muestra primeras 4)
+
+## 🎨 Personalización
+
+### Cambiar el avatar:
+
+Puedes usar:
+- **Emojis**: `"🚀"`, `"👨‍💻"`, `"🎮"`
+- **URLs de imagen**: `"https://tu-avatar.jpg"`
+
+### Modificar colores:
+
+En `publicaciones.html`, busca las variables CSS (línea 10):
+
+```css
+:root {
+    --bg-primary: #0a0e27;    /* Fondo principal */
+    --bg-card: #1a2142;       /* Fondo de tarjetas */
+    --accent: #ffd166;        /* Color de acento */
+    /* ... */
+}
+```
+
+### Cambiar nombre de autor:
+
+En cada publicación, cambia el campo `autor`:
+
+```javascript
+autor: "Tu Nombre Real",
+```
+
+## 📊 Estadísticas (Likes y Comentarios)
+
+Actualmente son solo visuales (números estáticos). Si quieres hacerlos funcionales, necesitarías:
+
+1. Un backend (servidor)
+2. Base de datos
+3. Sistema de autenticación
+
+Para GitHub Pages (sitio estático), los números son decorativos.
+
+## 🔗 Integración con el Sitio Principal
+
+La página ya está integrada en tu menú de navegación. Los usuarios pueden ir a "Publicaciones" desde cualquier página.
+
+## 📱 Responsive
+
+El diseño se adapta automáticamente a:
+- Móviles: 1 columna, imágenes optimizadas
+- Tablets: Diseño fluido
+- Desktop: Vista completa
+
+## 🎯 Tips y Trucos
+
+### Formato de texto:
+
+Usa saltos de línea para mejor legibilidad:
+
+```javascript
+texto: `Primera línea
+
+Segunda línea con espacio
+
+Tercera línea`
+```
+
+### Usar emojis efectivamente:
+
+```javascript
+texto: `🎉 ¡Lanzamiento! 🚀
+
+Después de mucho trabajo, finalmente...`
+```
+
+### Tags efectivos:
+
+```javascript
+tags: ["webdev", "javascript", "proyectos"]
+// Se mostrarán como: #webdev #javascript #proyectos
+```
+
+## 🚀 Ejemplo Completo de Publicación
+
+```javascript
+{
+    id: 7,
+    autor: "Juan Pérez",
+    avatar: "👨‍💻",
+    fecha: "29 Enero 2026, 10:00",
+    texto: `¡Gran noticia! 🎉
+
+Acabo de lanzar mi nuevo proyecto open source.
+
+Es una herramienta para desarrolladores que simplifica el manejo de APIs. Espero que les sea útil!
+
+Link en mi GitHub 🔗`,
+    imagenes: [
+        "images/proyecto-banner.jpg",
+        "images/screenshot-1.png",
+        "images/screenshot-2.png"
+    ],
+    tags: ["opensource", "javascript", "api", "herramientas"],
+    likes: 0,
+    comentarios: 0
+}
+```
+
+## 🔧 Solución de Problemas
+
+**Las imágenes no cargan:**
+- Verifica que las URLs sean correctas y públicas
+- Usa URLs HTTPS (no HTTP)
+- Comprueba que las imágenes existan
+
+**El feed está vacío:**
+- Asegúrate de tener al menos una publicación en el array
+- Revisa la consola del navegador (F12) para errores
+
+**El diseño se ve mal:**
+- Limpia la caché del navegador (Ctrl + Shift + R)
+- Verifica que todos los archivos estén en la misma carpeta
+
+## 📚 Estructura de Datos
+
+Cada publicación debe tener:
+
+```javascript
+{
+    id: número único,
+    autor: "string",
+    avatar: "emoji o URL",
+    fecha: "string con formato libre",
+    texto: "string o null",
+    imagenes: ["url1", "url2"] o null,
+    tags: ["tag1", "tag2"] o [],
+    likes: número,
+    comentarios: número
+}
+```
+
+## 🎨 Ideas de Contenido
+
+Puedes publicar:
+- 📣 Anuncios de proyectos
+- 💡 Pensamientos y reflexiones
+- 🖼️ Screenshots y progress updates
+- 📚 Tips y tutoriales
+- 🎮 Actualizaciones de juegos
+- 💻 Snippets de código
+- 🎉 Logros y celebraciones
+- 📝 Notas rápidas
+
+## 🔄 Actualizar Publicaciones
+
+Si quieres editar una publicación existente:
+
+1. Encuentra la publicación por su ID en `publicaciones.js`
+2. Modifica los campos que necesites
+3. Guarda el archivo
+4. Recarga la página
+
+## 📦 Subir a GitHub Pages
+
+1. Asegúrate de tener estos archivos en tu repositorio:
+   - index.html
+   - script.js
+   - publicaciones.html
+   - publicaciones.js
+
+2. Sube cualquier carpeta de imágenes que uses
+
+3. Espera unos minutos para que GitHub Pages actualice
+
+4. Tu página estará en:
+   - Principal: `https://tuusuario.github.io/tu-repo/`
+   - Publicaciones: `https://tuusuario.github.io/tu-repo/publicaciones.html`
+
+## ✨ Próximas Mejoras (Opcionales)
+
+Si quieres agregar más funcionalidad:
+- Sistema de búsqueda
+- Filtros por tags
+- Paginación
+- Modo de vista de galería
+- Exportar a JSON
+- RSS Feed
+
+---
+
+¡Disfruta compartiendo tu contenido! 🎉
+
+Si tienes preguntas, revisa los comentarios en el código o experimenta con la consola del navegador.
