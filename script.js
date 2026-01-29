@@ -49,7 +49,7 @@ const publicaciones = [
     {
         id: 1,
         autor: "Tu Nombre",
-        avatar: "https://i.imgur.com/z4vfFKw.jpeg",
+        avatar: "🫥",
         fecha: "28 Enero 2026, 15:30",
         texto: `¡Hola a todos! 👋
 
